@@ -188,17 +188,28 @@ class CompanieController extends controller {
                 break;
             case 'edit':
                 //find job by id
+                //check $this->params[1];
                 $job = new Job(time(), 'Test job deja existent', null, null, null);
                 $this->editJob($job);
                 break;
             case 'delete':
                 header("Location: /");
                 break;
+            
+            case 'candidates':
+                viewJob($this->params[1]);
+                break;
 
             default:
                 header("Location: /");
                 break;
         }
+    }
+    
+    public function viewJob($jobId) {
+        $job = new Job(time(), 'Test job deja existent', null, null, null);
+        $cvs = array();
+        require_once('views/companie/viewJob.php');
     }
 
     public function editJob($job) {
