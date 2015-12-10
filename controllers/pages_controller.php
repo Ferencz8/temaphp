@@ -35,12 +35,14 @@ class PagesController extends controller {
 
             if ($validLogin) {
                 //TODO: login logic
-                if ($_POST['username'] == 'admin' && $_POST['password'] == 'admin') {
+                $candidate = $this -> searchCandidate($_POST['username']);
+                if($candidate != null && $candidate -> user -> password == $_POST['password']){
                     //TODO: selecteaza tipul si fa redirect
-                    $_SESSION['loged'] = 1; //userid
+                    $_SESSION['loged'] = $candidate-> user-> id; //userid
                     $_SESSION['accountType'] = 0; // 0- Candidat, 1- Companie
-                    header('Location: /');
-                } else {
+                    header('Location: /candidat/home');
+                }
+                else{
                     $_SESSION['loginerror'] = 'Username and/or password are incorect';
                     header('Location: /');
                 }
@@ -78,4 +80,14 @@ class PagesController extends controller {
         require_once('views/pages/error.php');
     }
 
+    function searchCandidate($username){
+        for($i = 0; $i < count($_SESSION["candidates"]); $i++)
+        {
+            $candidate = $_SESSION["candidates"][$i];
+            if($candidate -> user -> username == $username)
+                return $candidate;
+        }
+
+        return null;
+    }
 }
