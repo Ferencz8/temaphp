@@ -19,7 +19,7 @@ class Candidate extends BaseModel{
     protected $appliedJobs;
 
     function __construct($id, $fn, $ln, $birthdate, $address, $phone, $email,$appliedJobs, User $u = NULL, CV $cv = NULL){
-        $this -> id = 4;
+        $this -> id = $id;
         $this -> firstname = $fn;
         $this -> lastname = $ln;
         $this -> birthdate = $birthdate;

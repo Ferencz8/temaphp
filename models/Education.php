@@ -7,28 +7,31 @@
  */
 
 
-class Education{
+class Education extends BaseModel{
 
-    private $id;
-    private $cvId;//FK
-    private $city;
-    private $institution;
-    private $startDate;
-    private $endDate;
+    protected $id;
+    protected $cvId;//FK
+    protected $city;
+    protected $institution;
+    protected $startDate;
+    protected $endDate;
 
-    function __construct(){
-
-    }
-
-    public function __get($property){
-        if(property_exists($this, $property)){
-            return $this -> $property;
-        }
-    }
-
-    public function __set($property, $value){
-        if(property_exists($this, $property)){
-            $this -> $property = $value;
-        }
+    /**
+     * Education constructor.
+     * @param $id
+     * @param $cvId
+     * @param $city
+     * @param $institution
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($id, $city, $institution, $startDate, $endDate, $cvId = null)
+    {
+        $this->id = $id;
+        $this->cvId = $cvId;
+        $this->city = $city;
+        $this->institution = $institution;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 }

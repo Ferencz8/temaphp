@@ -60,32 +60,20 @@ class CandidatController extends controller
 
     public function edit()
     {
+        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
         if (isset($_POST["save"])) {
-            $_SESSION["cv"] = new CV($_POST["txtCareerLevel"]);
 
-            for ($i = 1; $i <= $_SESSION["education"]; $i++) {
-                array_push($_SESSION["cv"]->educations, new Education());
-                $_SESSION["cv"]->educations[$i - 1]->city = $_POST["txtCity" . $i . "Edu"];
-                $_SESSION["cv"]->educations[$i - 1]->institution = $_POST["txtInstitution" . $i . "Edu"];
-                $_SESSION["cv"]->educations[$i - 1]->startDate = $_POST["txtStartDate" . $i . "Edu"];
-                $_SESSION["cv"]->educations[$i - 1]->endDate = $_POST["txtEndDate" . $i . "Edu"];
+            $editform = $this->validateEditCVForm();
+            if($editform != null){
+                $editform -> id = $candidateLoggedIn -> id;
+                $this -> candidateRepository -> updateCandidate($editform);
+                header("Location: /candidat/view");
             }
-
-            for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
-                array_push($_SESSION["cv"]->professional_experiences, new ProfessionalExperience());
-                $_SESSION["cv"]->professional_experiences[$i - 1]->city = $_POST["txtCity" . $i . "ProfEdu"];
-                $_SESSION["cv"]->professional_experiences[$i - 1]->institution = $_POST["txtInstitution" . $i . "ProfEdu"];
-                $_SESSION["cv"]->professional_experiences[$i - 1]->startDate = $_POST["txtStartDate" . $i . "ProfEdu"];
-                $_SESSION["cv"]->professional_experiences[$i - 1]->endDate = $_POST["txtEndDate" . $i . "ProfEdu"];
-                $_SESSION["cv"]->professional_experiences[$i - 1]->position = $_POST["txtPosition" . $i . "ProfEdu"];
-            }
-            header("Location: /candidat/view");
         }
 
 
         $headerLinks = $this->canditatHeader();
         $headerLinks[1][2] = 'active';
-        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
         require_once('views/candidat/edit.php');
     }
 
@@ -93,6 +81,9 @@ class CandidatController extends controller
     {
         $headerLinks = $this->canditatHeader();
         $headerLinks[2][2] = 'active';
+
+        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
+        $cv = $candidateLoggedIn -> cv;
         require_once('views/candidat/view.php');
     }
 
@@ -221,5 +212,34 @@ class CandidatController extends controller
 
             return count($_SESSION["errors"]) > 0 ? false : true;
         }
+    }
+
+    function validateEditCVForm(){
+
+        //TODO:: implement edit form validations
+        $result = $this -> validateFirstCreateForm();
+        if($result == false)
+            return null;
+
+        $candidate = $_SESSION['candidate'];
+        unset($_SESSION['candidate']);
+
+        $cv = new CV(time(), $_POST["txtCareerLevel"]);
+        $cv -> id = time();
+        for ($i = 1; $i <= $_SESSION["education"]; $i++) {
+            array_push($cv->educations, new Education(time(), $_POST["txtCity" . $i . "Edu"], $_POST["txtInstitution" . $i . "Edu"], $_POST["txtStartDate" . $i . "Edu"], $_POST["txtEndDate" . $i . "Edu"] ));
+        }
+
+        for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
+            array_push($cv->professional_experiences, new ProfessionalExperience(time(), null, null, null, null,null));
+            $cv->professional_experiences[$i - 1]->city = $_POST["txtCity" . $i . "ProfEdu"];
+            $cv->professional_experiences[$i - 1]->institution = $_POST["txtInstitution" . $i . "ProfEdu"];
+            $cv->professional_experiences[$i - 1]->startDate = $_POST["txtStartDate" . $i . "ProfEdu"];
+            $cv->professional_experiences[$i - 1]->endDate = $_POST["txtEndDate" . $i . "ProfEdu"];
+            $cv->professional_experiences[$i - 1]->position = $_POST["txtPosition" . $i . "ProfEdu"];
+        }
+
+        $candidate -> cv = $cv;
+        return $candidate;
     }
 }

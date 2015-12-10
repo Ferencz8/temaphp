@@ -14,6 +14,8 @@ require_once('core/connection.php');
 require_once('core/autoloader.php');
 require_once('core/errorHandler.php');
 
+include('initValues.php');
+
 $data = split('/', $_SERVER['REQUEST_URI']);
 array_shift($data);
 //var_dump($data);

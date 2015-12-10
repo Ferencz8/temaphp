@@ -16,4 +16,21 @@ class CandidateRepository{
         }
         return null;
     }
+
+    public function updateCandidate($candidate){
+        for($i = 0; $i <count($_SESSION["candidates"]); $i++){
+            $currentCandidate = $_SESSION["candidates"][$i];
+            if($currentCandidate -> id == $candidate -> id)
+            {
+                $currentCandidate -> firstname = $candidate -> firstname;
+                $currentCandidate -> lastname = $candidate -> lastname;
+                $currentCandidate -> birthdate = $candidate -> birthdate;
+                $currentCandidate -> address = $candidate -> address;
+                $currentCandidate -> phone = $candidate -> phone;
+                $currentCandidate -> email = $candidate -> email;
+                $currentCandidate -> cv = $candidate -> cv;
+                break;
+            }
+        }
+    }
 }

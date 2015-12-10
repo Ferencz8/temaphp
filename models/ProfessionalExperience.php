@@ -6,29 +6,41 @@
  * Time: 3:09 PM
  */
 
-class ProfessionalExperience{
+class ProfessionalExperience extends  BaseModel{
 
-    private $id;
-    private $cvId;//FK
-    private $city;
-    private $institution;
-    private $startDate;
-    private $endDate;
-    private $position;
+    protected $id;
+    protected $cvId;//FK
+    protected $city;
+    protected $institution;
+    protected $startDate;
+    protected $endDate;
+    protected $position;
 
-    function __construct(){
-
+    /**
+     * ProfessionalExperience constructor.
+     * @param $id
+     * @param $cvId
+     * @param $city
+     * @param $institution
+     * @param $startDate
+     * @param $endDate
+     * @param $position
+     */
+    public function __construct($id,  $city, $institution, $startDate, $endDate, $position, $cvId = null)
+    {
+        $this->id = $id;
+        $this->cvId = $cvId;
+        $this->city = $city;
+        $this->institution = $institution;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->position = $position;
     }
 
-    public function __get($property){
+
+    public function &__get($property){
         if(property_exists($this, $property)){
             return $this -> $property;
-        }
-    }
-
-    public function __set($property, $value){
-        if(property_exists($this, $property)){
-            $this -> $property = $value;
         }
     }
 }
