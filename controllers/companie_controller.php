@@ -45,7 +45,7 @@ class CompanieController extends controller {
         $allText = '/^[a-zA-Z]+$/';
         $phoneRegex = '/^[0-9]{10,}$/';
         $_SESSION["errors"] = array();
-       
+
         $company->description = $_POST["description"];
         $company->logo = $_POST["logo"];
 
@@ -80,7 +80,7 @@ class CompanieController extends controller {
             if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 
                 //$_SESSION["txtEmail"] = $_POST["txtEmail"];
-               $company->email = $_POST["email"];
+                $company->email = $_POST["email"];
             } else {
                 array_push($_SESSION["errors"], "Email - wrong format");
             }
@@ -156,6 +156,8 @@ class CompanieController extends controller {
     }
 
     public function edit() {
+        $headerLinks = $this->companieHeader();
+        $headerLinks[1][2] = 'active';
 
         $company = $this->companyRepository->getCompanyByUserId($_SESSION['loged']);
 
@@ -173,16 +175,52 @@ class CompanieController extends controller {
             require_once('views/companie/edit.php');
         }
     }
+    
+    public function job(){
+        if ($this->params == null || count($this->params) == 0) {
+            header("Location: /");
+        }
+        $action = $this->params[0];
+        switch ($action) {
+            case 'post':
+                $this->post();
+                break;
+            case 'edit':
+                
+                break;
+            case 'delete':
+                
+                break;
+
+            default:
+                header("Location: /");
+                break;
+        }
+    }
 
     public function post() {
-        echo 'postam';
+        $headerLinks = $this->companieHeader();
+        $headerLinks[2][2] = 'active';
+        require_once('views/companie/post.php');
+
+        if (isset($_POST['createcompany'])) {
+            $_SESSION['job'] = new Company(null, null);
+            $validForm = $this->validateFirstCreateForm($_SESSION['company']);
+            if ($validForm) {
+                header("Location: /");
+            } else {
+                require_once('views/companie/post.php');
+            }
+        } else {
+            require_once('views/companie/post.php');
+        }
     }
 
     public function companieHeader() {
         return array(
             array('/', '<span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home', ''),
             array('/companie/edit', '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Edit Account', ''),
-            array('/companie/post', '<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Post Job', ''),
+            array('/companie/job/post', '<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Post Job', ''),
             array('/logout', 'Logout', 'navbar-right')
         );
     }

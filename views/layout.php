@@ -2,8 +2,8 @@
 <html>
   <head>
         <title>Tema</title>
-        <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="../resources/css/own.css">
+        <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/resources/css/own.css">
   </head>
   <body>
 
