@@ -9,7 +9,7 @@
 class BaseModel
 {
 
-    public function &__get($property)
+    public function __get($property)
     {//gets value by reference
         if (property_exists($this, $property)) {
             return $this->$property;

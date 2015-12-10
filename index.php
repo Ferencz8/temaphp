@@ -6,6 +6,7 @@ require_once 'models/User.php';
 require_once 'models/CV.php'; //problema serializare, il putem scoate dupa
 require_once 'models/Education.php'; //problema serializare, il putem scoate dupa
 require_once 'models/ProfessionalExperience.php'; //problema serializare, il putem scoate dupa
+require_once 'dal/CandidateRepository.php';
 session_start();
 require_once('core/connection.php');
 require_once('core/autoloader.php');

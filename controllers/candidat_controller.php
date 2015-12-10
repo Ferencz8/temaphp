@@ -5,6 +5,14 @@ include_once 'controller.php';
 class CandidatController extends controller
 {
 
+    protected $candidateRepository;
+
+    function __construct($params)
+    {
+        parent::__construct($params);
+        $this -> candidateRepository = new CandidateRepository();
+    }
+
     public function create()
     {
         $headerLinks = $this->canditatHeader();
@@ -76,6 +84,7 @@ class CandidatController extends controller
 
         $headerLinks = $this->canditatHeader();
         $headerLinks[1][2] = 'active';
+        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
         require_once('views/candidat/edit.php');
     }
 

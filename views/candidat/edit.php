@@ -2,10 +2,11 @@
 
 <?php
 
+if (!isset($_SESSION["education"])) {
+    $_SESSION["education"] = 0;
+}
+
 if (isset($_POST["btnAddEducation"])) {
-    if (!isset($_SESSION["education"])) {
-        $_SESSION["education"] = 0;
-    }
 
     if ($_POST["btnAddEducation"] == "+") {
 
@@ -15,10 +16,12 @@ if (isset($_POST["btnAddEducation"])) {
     }
 }
 
+if (!isset($_SESSION["professionalExperience"])) {
+    $_SESSION["professionalExperience"] = 0;
+}
+
+
 if (isset($_POST["btnAddProfessionalExperience"])) {
-    if (!isset($_SESSION["professionalExperience"])) {
-        $_SESSION["professionalExperience"] = 0;
-    }
 
     if ($_POST["btnAddProfessionalExperience"] == "+") {
 
@@ -34,8 +37,32 @@ if (isset($_POST["btnAddProfessionalExperience"])) {
     <h3>Edit CV</h3>
     <br/>
     <div class="row rowMargin">
+        <span>First Name</span>
+        <input type="text" form="saveCV" name="txtFirstName" value="<?php echo $candidateLoggedIn -> firstname; ?>">
+    </div>
+    <div class="row rowMargin">
+        <span>Last Name</span>
+        <input type="text" form="saveCV" name="txtLastName" value="<?php echo $candidateLoggedIn -> lastname; ?>">
+    </div>
+    <div class="row rowMargin">
+        <span>BirthDate</span>
+        <input type="date" form="saveCV" name="txtBirthDate" value="<?php echo $candidateLoggedIn -> birthdate; ?>">
+    </div>
+    <div class="row rowMargin">
+        <span>Address</span>
+        <input type="text" form="saveCV" name="txtAddress" value="<?php echo $candidateLoggedIn -> address; ?>">
+    </div>
+    <div class="row rowMargin">
+        <span>Phone</span>
+        <input type="text" form="saveCV" name="txtPhone" value="<?php echo $candidateLoggedIn -> phone; ?>">
+    </div>
+    <div class="row rowMargin">
+        <span>Email</span>
+        <input type="text" form="saveCV" name="txtEmail" value="<?php echo $candidateLoggedIn -> email; ?>">
+    </div>
+    <div class="row rowMargin">
         <span>Career Level</span>
-        <input type="text" form="saveCV" name="txtCareerLevel">
+        <input type="text" form="saveCV" name="txtCareerLevel" value="<?php echo $candidateLoggedIn -> cv -> career_level; ?>">
     </div>
     <div class="row rowMargin">
         <span>Education</span>
@@ -45,7 +72,7 @@ if (isset($_POST["btnAddProfessionalExperience"])) {
         </form>
         <!--            Education Info     -->
         <?php
-        if (isset($_SESSION["education"]) && $_SESSION["education"] > 0) {
+        if (isset($_SESSION["cv"]) && $_SESSION["education"] > 0) {
             for ($i = 1; $i <= $_SESSION["education"]; $i++) {
                 echo "
                     <div class=\"education\">
@@ -85,7 +112,7 @@ if (isset($_POST["btnAddProfessionalExperience"])) {
 
         <!--            Professional Experience Info     -->
         <?php
-        if (isset($_SESSION["professionalExperience"]) && $_SESSION["professionalExperience"] > 0) {
+        if (isset($_SESSION["cv"]) && $_SESSION["professionalExperience"] > 0) {
             for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
                 echo "
                 <div id='professionalExperience'>

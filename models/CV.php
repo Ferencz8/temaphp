@@ -6,12 +6,12 @@
  * Time: 3:09 PM
  */
 
-class CV{
+class CV extends BaseModel{
 
-    private $id;
-    private $career_level;
-    private $educations;
-    private $professional_experiences;
+    protected $id;
+    protected $career_level;
+    protected $educations;
+    protected $professional_experiences;
 
     function __construct($career_level, array $educations = array(), array $professionalExperiences = array()){
         $this -> career_level = $career_level;
@@ -19,15 +19,15 @@ class CV{
         $this -> professional_experiences = $professionalExperiences;
     }
 
-    public function &__get($property){//gets value by reference
-        if(property_exists($this, $property)){
-            return $this -> $property;
-        }
-    }
-
-    public function __set($property, $value){
-        if(property_exists($this, $property)){
-            $this -> $property = $value;
-        }
-    }
+//    public function &__get($property){//gets value by reference
+//        if(property_exists($this, $property)){
+//            return $this -> $property;
+//        }
+//    }
+//
+//    public function __set($property, $value){
+//        if(property_exists($this, $property)){
+//            $this -> $property = $value;
+//        }
+//    }
 }

@@ -39,6 +39,7 @@ class PagesController extends controller {
                 if($candidate != null && $candidate -> user -> password == $_POST['password']){
                     //TODO: selecteaza tipul si fa redirect
                     $_SESSION['loged'] = $candidate-> user-> id; //userid
+                    //$_SESSION['loged']$_SESSION['logedCandidat'] = $candidate;
                     $_SESSION['accountType'] = 0; // 0- Candidat, 1- Companie
                     header('Location: /candidat/home');
                 }

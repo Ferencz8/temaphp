@@ -5,7 +5,7 @@
     <br/>
     <div class="row rowMargin">
         <span>Career Level</span>
-        <input type="text" form="saveCV" name="txtCareerLevel">
+        <input type="text" form="saveCV" name="txtCareerLevel" value="<?php echo $_SESSION['cv']-> career_level;?>">
     </div>
     <div class="row rowMargin">
         <span>Education</span>
