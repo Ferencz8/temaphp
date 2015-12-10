@@ -107,7 +107,7 @@ $cv = $candidateLoggedIn->cv;
                            value="<?php echo $cv != null ? $cv->career_level : ''; ?>">
                 </div>
             </div>
-
+        </form>
             <br/>
 
             <!--            Education Info     -->
@@ -115,9 +115,8 @@ $cv = $candidateLoggedIn->cv;
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Education</label>
 
-                    <form method="post" id="addEducationForm">
-                        <input type="submit" class="btn btn-success" value="+" name="btnAddEducation"
-                               form="addEducationForm">
+                    <form method="post"">
+                        <input type="submit" class="btn btn-success" value="+" name="btnAddEducation">
                     </form>
                 </div>
                 <?php
@@ -162,7 +161,6 @@ $cv = $candidateLoggedIn->cv;
                     </div>";
                 }
                 ?>
-            </div>
     <br/>
 
     <!--            Professional Experience Info     -->
@@ -231,6 +229,7 @@ $cv = $candidateLoggedIn->cv;
         </form>
     </div>
 
+</div>
     <!--/.row-->
     <?php errorHandler::printErrorsOnStack(); ?>
 </div>

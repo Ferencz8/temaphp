@@ -6,11 +6,13 @@ class CandidatController extends controller
 {
 
     protected $candidateRepository;
+    protected $cvRepository;
 
     function __construct($params)
     {
         parent::__construct($params);
         $this -> candidateRepository = new CandidateRepository();
+        $this -> cvRepository = new CVRepository();
     }
 
     public function create()
@@ -85,6 +87,18 @@ class CandidatController extends controller
         $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
         $cv = $candidateLoggedIn -> cv;
         require_once('views/candidat/view.php');
+    }
+
+    public function viewCandidate(){
+
+        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByCVId($this -> params[0]);
+        $cv = $candidateLoggedIn -> cv;
+        require_once('views/candidat/view.php');
+    }
+
+    public function viewCV(){
+
+        $cv = $this -> cvRepository -> getCV($this -> params[0]);
     }
 
     protected function canditatHeader()

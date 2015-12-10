@@ -9,6 +9,7 @@ require_once 'models/Education.php'; //problema serializare, il putem scoate dup
 require_once 'models/ProfessionalExperience.php'; //problema serializare, il putem scoate dupa
 require_once 'dal/CandidateRepository.php';
 require_once 'dal/CompanyRepository.php';
+require_once 'dal/CVRepository.php';
 session_start();
 require_once('core/connection.php');
 require_once('core/autoloader.php');

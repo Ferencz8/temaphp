@@ -33,4 +33,14 @@ class CandidateRepository{
             }
         }
     }
+
+    public function getCandidateByCVId($cvId)
+    {
+        for($i = 0; $i <count($_SESSION["candidates"]); $i++){
+            $currentCandidate = $_SESSION["candidates"][$i];
+            if($currentCandidate -> cv -> id == $cvId)
+                return $currentCandidate;
+        }
+        return null;
+    }
 }
