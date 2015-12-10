@@ -1,0 +1,19 @@
+.center{
+    margin-left:850px;
+    margin-top:250px;
+}
+
+.bigContainer{
+    margin: auto;
+    width: 60%;
+}
+
+.rowMargin{
+    margin-left:0px;
+}
+
+.form-signin {
+    margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+}
