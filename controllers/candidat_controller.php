@@ -104,7 +104,7 @@ class CandidatController extends controller
         $textAndNumbers = '/^[a-zA-Z0-9]+$/';
         $_SESSION["errors"] = array();
 
-        $_SESSION["candidate"] = new Candidate(null, null, null, null, null, null, null, null);
+        $_SESSION["candidate"] = new Candidate(time(), null, null, null, null, null, null, null);
         //First Name
         if (isset($_POST["txtFirstName"]) && $_POST["txtFirstName"] !== '') {
             if (!preg_match($allText, $_POST["txtFirstName"])) {
