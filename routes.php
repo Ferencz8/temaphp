@@ -26,7 +26,7 @@ function call($controller, $action, $params) {
 // we're adding an entry for the new controller and its actions
 $controllers = array('pages' => ['home', 'login', 'logout' ,'error'],
     'candidat' => ['home','login' , 'create', 'view', 'edit'],
-    'companie' => ['home','login', 'create']);
+    'companie' => ['home','login', 'create' , 'edit', 'post']);
 
 if (array_key_exists($controller, $controllers)) {
     if (in_array($action, $controllers[$controller])) {

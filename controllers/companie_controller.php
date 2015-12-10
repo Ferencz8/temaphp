@@ -145,14 +145,36 @@ class CompanieController extends controller {
     
     public function home()
     {
-//        $headerLinks = $this->canditatHeader();
-//        $headerLinks[0][2] = 'active';
-//        $jobList = array(
-//            new Job("", "TestTitle", "", "", "", new Company("", "Software")),
-//            new Job("", "Title 2", "", "", "", new Company("", "Software"))
-//        );
-//        require_once('views/candidat/home.php');
-        echo 'companie logata';
+        $headerLinks = $this->companieHeader();
+        $headerLinks[0][2] = 'active';
+        $jobList = array(
+            new Job("", "TestTitle", "", "", "", new Company("", "Software")),
+            new Job("", "Title 2", "", "", "", new Company("", "Software"))
+        );
+        require_once('views/companie/home.php');
+
+    }
+    
+    public function edit()
+    {
+        echo 'editam';
+
+    }
+    
+    public function post()
+    {
+        echo 'postam';
+
+    }
+    
+    public function companieHeader()
+    {
+        return array(
+            array('/', '<span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home', ''),
+            array('/companie/edit', '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Edit Account', ''),
+            array('/companie/post', '<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Post Job', ''),
+            array('/logout', 'Logout', 'navbar-right')
+        );
     }
 
 }
