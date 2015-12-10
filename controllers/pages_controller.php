@@ -32,18 +32,16 @@ class PagesController extends controller {
                 $validLogin = false;
                 $_SESSION['loginerror'] = 'A password must be introduced<br/>';
             }
-
             if ($validLogin) {
                 //TODO: login logic
-                $candidate = $this -> searchCandidate($_POST['username']);
-                if($candidate != null && $candidate -> user -> password == $_POST['password']){
+                $user = $this->searchUser($_POST['username']);
+                if ($user != null && $user[1]->password == $_POST['password']) {
                     //TODO: selecteaza tipul si fa redirect
-                    $_SESSION['loged'] = $candidate-> user-> id; //userid
+                    $_SESSION['loged'] = $user[1]->id; //userid
                     //$_SESSION['loged']$_SESSION['logedCandidat'] = $candidate;
-                    $_SESSION['accountType'] = 0; // 0- Candidat, 1- Companie
+                    $_SESSION['accountType'] = $user[0]; // 0- Candidat, 1- Companie
                     header('Location: /');
-                }
-                else{
+                } else {
                     $_SESSION['loginerror'] = 'Username and/or password are incorect';
                     header('Location: /');
                 }
@@ -66,8 +64,7 @@ class PagesController extends controller {
         if (isset($this->params['tipuser'])) {
             if ($this->params['tipuser'] == 0) {
                 $createTitle = 'Create Candidate Account 2/2';
-            }
-            else{
+            } else {
                 $createTitle = 'Create Company Account 2/2';
             }
         } else {
@@ -81,14 +78,35 @@ class PagesController extends controller {
         require_once('views/pages/error.php');
     }
 
-    function searchCandidate($username){
-        for($i = 0; $i < count($_SESSION["candidates"]); $i++)
-        {
-            $candidate = $_SESSION["candidates"][$i];
-            if($candidate -> user -> username == $username)
-                return $candidate;
+//    function searchCandidate($username){
+//        for($i = 0; $i < count($_SESSION["candidates"]); $i++)
+//        {
+//            $candidate = $_SESSION["candidates"][$i];
+//            if($candidate -> user -> username == $username)
+//                return $candidate;
+//        }
+//
+//        return null;
+//    }
+
+    function searchUser($username) {
+
+        if (isset($_SESSION["candidates"])) {
+            for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {
+                $candidate = $_SESSION["candidates"][$i];
+                if ($candidate->user->username == $username)
+                    return [0, $candidate->user];
+            }
+        }
+        if (isset($_SESSION["companys"])) {
+            for ($i = 0; $i < count($_SESSION["companys"]); $i++) {
+                $company = $_SESSION["companys"][$i];
+                if ($company->user->username == $username)
+                    return [1, $company->user];
+            }
         }
 
         return null;
     }
+
 }

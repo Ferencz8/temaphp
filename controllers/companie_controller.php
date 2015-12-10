@@ -40,7 +40,7 @@ class CompanieController extends controller {
         $phoneRegex = '/^[0-9]{10,}$/';
         $_SESSION["errors"] = array();
 
-        $_SESSION["company"] = new Company(time(), null);
+        $_SESSION["company"] = new Company(null,null);
 
         $_SESSION["company"]->description = $_POST["description"];
         $_SESSION["company"]->logo = $_POST["logo"];
@@ -76,7 +76,7 @@ class CompanieController extends controller {
             if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 
                 //$_SESSION["txtEmail"] = $_POST["txtEmail"];
-                $_SESSION["company"]->email = $_POST["txtEmail"];
+                $_SESSION["company"]->email = $_POST["email"];
             } else {
                 array_push($_SESSION["errors"], "Email - wrong format");
             }
@@ -141,6 +141,18 @@ class CompanieController extends controller {
 
             return count($_SESSION["errors"]) > 0 ? false : true;
         }
+    }
+    
+    public function home()
+    {
+//        $headerLinks = $this->canditatHeader();
+//        $headerLinks[0][2] = 'active';
+//        $jobList = array(
+//            new Job("", "TestTitle", "", "", "", new Company("", "Software")),
+//            new Job("", "Title 2", "", "", "", new Company("", "Software"))
+//        );
+//        require_once('views/candidat/home.php');
+        echo 'companie logata';
     }
 
 }

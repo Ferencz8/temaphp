@@ -2,6 +2,7 @@
 
 require_once 'models/BaseModel.php';
 require_once 'models/Candidate.php';
+require_once 'models/Company.php';
 require_once 'models/User.php';
 require_once 'models/CV.php'; //problema serializare, il putem scoate dupa
 require_once 'models/Education.php'; //problema serializare, il putem scoate dupa
