@@ -3,8 +3,11 @@
 <?php
 
 if ($candidateLoggedIn != null) {
-    $educations = $candidateLoggedIn->cv->educations;
-    $professional_experiences = $candidateLoggedIn->cv->professional_experiences;
+    $educations = $professional_experiences = array();
+    if ($candidateLoggedIn->cv != null) {
+        $educations = $candidateLoggedIn->cv->educations;
+        $professional_experiences = $candidateLoggedIn->cv->professional_experiences;
+    }
 }
 
 if (!isset($_SESSION["education"])) {
@@ -82,7 +85,7 @@ $cv = $candidateLoggedIn->cv;
         if (isset($_SESSION["education"]) && $_SESSION["education"] > 0) {
             for ($i = 1; $i <= $_SESSION["education"]; $i++) {
                 $institution = $city = $position = $startDate = $endDate = '';
-                if(isset($educations[$i - 1])){
+                if (isset($educations[$i - 1])) {
                     $institution = $educations[$i - 1]->institution;
                     $city = $educations[$i - 1]->city;
                     $startDate = $educations[$i - 1]->startDate;
@@ -129,7 +132,7 @@ $cv = $candidateLoggedIn->cv;
         if (isset($_SESSION["professionalExperience"]) && $_SESSION["professionalExperience"] > 0) {
             for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
                 $institution = $city = $position = $startDate = $endDate = '';
-                if(isset($professional_experiences[$i -1])){
+                if (isset($professional_experiences[$i - 1])) {
                     $institution = $professional_experiences[$i - 1]->institution;
                     $city = $professional_experiences[$i - 1]->city;
                     $position = $professional_experiences[$i - 1]->position;
@@ -141,23 +144,23 @@ $cv = $candidateLoggedIn->cv;
                 <div id='professionalExperience'>
                     <div class='institution'>
                         <span>Institution</span>
-                        <input form='saveCV' type='text' name='txtInstitution" . $i . "ProfEdu" . "' value='" . $institution ."'>
+                        <input form='saveCV' type='text' name='txtInstitution" . $i . "ProfEdu" . "' value='" . $institution . "'>
                     </div>
                     <div class='city'>
                         <span>City</span>s
-                        <input form='saveCV' type='text' name='txtCity" . $i . "ProfEdu" . "' value='" . $city ."'>
+                        <input form='saveCV' type='text' name='txtCity" . $i . "ProfEdu" . "' value='" . $city . "'>
                     </div>
                     <div class='position'>
                         <span>Position</span>
-                        <input form='saveCV' type='text' name='txtPosition" . $i . "ProfEdu" . "' value='" . $position ."'>
+                        <input form='saveCV' type='text' name='txtPosition" . $i . "ProfEdu" . "' value='" . $position . "'>
                     </div>
                     <div class='startDate'>
                         <span>Start Date</span>
-                        <input form='saveCV' type='date' name='txtStartDate" . $i . "ProfEdu" . "' value='" . $startDate."'>
+                        <input form='saveCV' type='date' name='txtStartDate" . $i . "ProfEdu" . "' value='" . $startDate . "'>
                     </div>
                     <div class='endDate'>
                         <span>End Date</span>
-                        <input form='saveCV' type='date' name='txtEndDate" . $i . "ProfEdu" . "' value='" . $endDate."'>
+                        <input form='saveCV' type='date' name='txtEndDate" . $i . "ProfEdu" . "' value='" . $endDate . "'>
                     </div>
                 </div>
                 <br/>";
