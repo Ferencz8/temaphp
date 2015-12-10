@@ -17,6 +17,7 @@ class Company extends BaseModel{
     protected $logo;
     protected $cities;
     protected $activityDomains;
+    protected $user;
     
     protected $jobs;
 
