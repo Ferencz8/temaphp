@@ -12,6 +12,7 @@ require_once 'dal/CompanyRepository.php';
 session_start();
 require_once('core/connection.php');
 require_once('core/autoloader.php');
+require_once('core/errorHandler.php');
 
 $data = split('/', $_SERVER['REQUEST_URI']);
 array_shift($data);
