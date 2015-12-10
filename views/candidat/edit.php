@@ -231,6 +231,6 @@ $cv = $candidateLoggedIn->cv;
         </form>
     </div>
 
+    <!--/.row-->
+    <?php errorHandler::printErrorsOnStack(); ?>
 </div>
-<!--/.row-->
-<?php errorHandler::printErrorsOnStack(); ?>
