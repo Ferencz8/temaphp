@@ -18,13 +18,7 @@
             <a href="../candidat/create" class="btn btn-default btn-sm btn-block">Create Candidat Account</a>
             <a href="../companie/create" class="btn btn-default btn-sm btn-block">Create Companie Account</a>
         </div>
-        <?php if(isset($_SESSION['loginerror'])): ?>
-        </br>
-        <div class="alert alert-danger" role="alert">
-        <strong>Some problems have been detected</strong>
-            <?php echo $_SESSION['loginerror']; unset($_SESSION['loginerror']);?>
-        </div>
-        <?php endif; ?>
+        <?php errorHandler::printErrorsOnStack(); ?>
     </form>
 
 </div>

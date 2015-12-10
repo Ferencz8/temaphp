@@ -22,15 +22,15 @@ class PagesController extends controller {
     public function login() {
         if (isset($_POST['login'])) {
             $validLogin = true;
-
+            $_SESSION["errors"] = array();
             //TODO: aici fa validari, dupa lungime etc
             if (!isset($_POST['username'])) {
                 $validLogin = false;
-                $_SESSION['loginerror'] = 'An username must be introduced<br/>';
+                array_push($_SESSION["errors"], "An username must be introduced");
             }
             if (!isset($_POST['password'])) {
                 $validLogin = false;
-                $_SESSION['loginerror'] = 'A password must be introduced<br/>';
+                array_push($_SESSION["errors"], "A password must be introduced");
             }
             if ($validLogin) {
                 //TODO: login logic
@@ -42,14 +42,14 @@ class PagesController extends controller {
                     $_SESSION['accountType'] = $user[0]; // 0- Candidat, 1- Companie
                     header('Location: /');
                 } else {
-                    $_SESSION['loginerror'] = 'Username and/or password are incorect';
+                    array_push($_SESSION["errors"], "Username and/or password are incorect");
                     header('Location: /');
                 }
             } else {
                 header('Location: /');
             }
         } else {
-            $_SESSION['loginerror'] = 'Can not login without submiting the login form';
+            array_push($_SESSION["errors"], "Can not login without submiting the login form");
             header('Location: /');
         }
     }

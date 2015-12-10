@@ -20,7 +20,7 @@ class errorHandler {
         if(isset($_SESSION["errors"]) && count($_SESSION["errors"])!= 0)
         {
             $errorDiv .= '<div class="alert alert-danger" role="alert">'
-            . '<strong>Some problems have been detected</strong>';
+            . '<p><strong>Some problems have been detected:</strong></p>';
             foreach ($_SESSION["errors"] as $errorMessaje) {
                 $errorDiv.= '<p>'.$errorMessaje.'</p>';
             }
@@ -32,6 +32,6 @@ class errorHandler {
     
     public static function printErrorsOnStack()
     {
-        echo getErrorsOnStack();
+        echo self::getErrorsOnStack();
     }
 }
