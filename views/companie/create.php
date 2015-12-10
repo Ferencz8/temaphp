@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Citys</label>
                 <div class="col-sm-10">
-                    <select multiple class="form-control" name="cityes">
+                    <select multiple class="form-control" name="cities">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
