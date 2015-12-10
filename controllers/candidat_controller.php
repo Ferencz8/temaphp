@@ -20,12 +20,14 @@ class CandidatController extends controller
 
             $validForm = $this->validateFirstCreateForm();
             if ($validForm) {
-                require_once('views/candidat/create2.php');
+                $createTitle = 'Create Candidate Account 2/2';
+                $createBackLink = '/candidat/create';
+                require_once('views/pages/create.php');
             } else {
                 require_once('views/candidat/create.php');
             }
 
-        } else if (isset($_POST['btnSaveNewUser'])) {
+        } else if (isset($_POST['createUser'])) {
             $validForm = $this->validateSecondCreateForm();
             if ($validForm) {
                 //TODO:: store newly creadet user
@@ -182,7 +184,7 @@ class CandidatController extends controller
         $usernameRegex = '/^[a-zA-Z0-9]{6,}$/';
         $passwordRegex = '/^[a-zA-Z0-9]{6,}$/';
 
-        if (isset($_POST["btnSaveNewUser"])) {
+        if (isset($_POST["createUser"])) {
             $user = new User(time(), null, null);
             //Username
             if (isset($_POST["txtUsername"]) && $_POST["txtUsername"] !== '') {

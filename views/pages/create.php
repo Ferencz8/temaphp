@@ -10,26 +10,26 @@
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  placeholder="username" name="username">
+                    <input type="text" class="form-control"  placeholder="username" name="txtUsername">
                 </div>
             </div>
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"  placeholder="password" name="password">
+                    <input type="password" class="form-control"  placeholder="password" name="txtPassword">
                 </div>
             </div>
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Confirm</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"  placeholder="confirm password" name="password">
+                    <input type="password" class="form-control"  placeholder="confirm password" name="txtConfirmPassword">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <a href="/" class="btn btn-default">Back</a>
-                    <button type="submit" class="btn btn-default" value="createuser" name="createuser">Create</button>                    
+                    <a href="<?php echo $createBackLink; ?>" class="btn btn-default">Back</a>
+                    <button type="submit" class="btn btn-default" value="createUser" name="createUser">Create</button>                    
                 </div>
             </div>
         </form>
