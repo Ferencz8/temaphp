@@ -34,12 +34,6 @@
             </div>
         </form>
     </div><!--/.row-->
-    <?php if(isset($_SESSION['createusererror'])): ?>
-        </br>
-        <div class="alert alert-danger" role="alert">
-        <strong>Some problems have been detected</strong>
-            <?php echo $_SESSION['createcusererror']; unset($_SESSION['createcompanyerror']);?>
-        </div>
-    <?php endif; ?>
+        <?php errorHandler::printErrorsOnStack(); ?>
     
 </div>
