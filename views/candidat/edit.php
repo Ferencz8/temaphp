@@ -7,6 +7,9 @@ if ($candidateLoggedIn != null) {
     if ($candidateLoggedIn->cv != null) {
         $educations = $candidateLoggedIn->cv->educations;
         $professional_experiences = $candidateLoggedIn->cv->professional_experiences;
+
+        $_SESSION["education"] = count($educations);
+        $_SESSION["professionalExperience"] = count($professional_experiences);
     }
 }
 
@@ -41,93 +44,137 @@ if (isset($_POST["btnAddProfessionalExperience"])) {
 $cv = $candidateLoggedIn->cv;
 ?>
 
-<div class="container">
-    <h3>Edit CV</h3>
+<div class="container form-horizontal">
+
+    <div class="row-fluid">
+        <h4 class=""><i class="icon-plus-sign-alt"></i> Edit CV</h4>
+        <hr>
+        <form method="post" action="create">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First Name *</label>
+
+                <div class="col-sm-10">
+                    <input type="text" form="saveCV" class="form-control" placeholder="First Name" name="txtFirstName"
+                           value="<?php echo $candidateLoggedIn->firstname; ?>">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Last Name *</label>
+
+                <div class="col-sm-10">
+                    <input type="text" form="saveCV" name="txtLastName" placeholder="Last Name" class="form-control"
+                           value="<?php echo $candidateLoggedIn->lastname; ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">BirthDate *</label>
+
+                <div class="col-sm-10">
+                    <input type="date" form="saveCV" class="form-control" name="txtBirthDate"
+                           value="<?php echo $candidateLoggedIn->birthdate; ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Address</label>
+
+                <div class="col-sm-10">
+                    <textarea name="txtAddress" form="saveCV" placeholder="..." class="form-control"
+                              value="<?php echo $candidateLoggedIn->address; ?>"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Phone *</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="txtPhone" form="saveCV" placeholder="Phone" class="form-control"
+                           value="<?php echo $candidateLoggedIn->phone; ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email *</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="txtEmail" form="saveCV" placeholder="Email" class="form-control"
+                           value="<?php echo $candidateLoggedIn->email; ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Career Level</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="txtCareerLevel" form="saveCV" placeholder="Email" class="form-control"
+                           value="<?php echo $cv != null ? $cv->career_level : ''; ?>">
+                </div>
+            </div>
+
+            <br/>
+
+            <!--            Education Info     -->
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Education</label>
+
+                    <form method="post" id="addEducationForm">
+                        <input type="submit" class="btn btn-success" value="+" name="btnAddEducation"
+                               form="addEducationForm">
+                    </form>
+                </div>
+                <?php
+                if (isset($_SESSION["education"]) && $_SESSION["education"] > 0) {
+                    for ($i = 1; $i <= $_SESSION["education"]; $i++) {
+                        $institution = $city = $position = $startDate = $endDate = '';
+                        if (isset($educations[$i - 1])) {
+                            $institution = $educations[$i - 1]->institution;
+                            $city = $educations[$i - 1]->city;
+                            $startDate = $educations[$i - 1]->startDate;
+                            $endDate = $educations[$i - 1]->startDate;
+                        }
+                        echo "
+                            <div class=\"city form-group\">
+                                <label class=\"col-sm-2 control-label\">City</label>
+                                <div class=\"col-sm-10\">
+                                    <input form='saveCV' type=\"text\" placeholder=\"City\" class=\"form-control\" name=\"txtCity" . $i . "Edu" . "\" value = \"" . $city . "\">
+                                </div>
+                            </div>
+                            <div class=\"institution form-group\">
+                                <label class=\"col-sm-2 control-label\">Institution</label>
+                                <div class=\"col-sm-10\">
+                                    <input form='saveCV' type=\"text\" placeholder=\"Institution\" class=\"form-control\"  name=\"txtInstitution" . $i . "Edu" . "\" value = \"" . $institution . "\">
+                                </div>
+                            </div>
+                            <div class=\"startDate form-group\">
+                                <label class=\"col-sm-2 control-label\">Start Date</label>
+                                <div class=\"col-sm-10\">
+                                <input form='saveCV' type=\"date\" placeholder=\"Start Date\" class=\"form-control\"  name=\"txtStartDate" . $i . "Edu" . "\" value = \"" . $startDate . "\"></div>
+                            </div>
+                            <div class=\"endDate form-group\">
+                                <label class=\"col-sm-2 control-label\">End Date</label>
+                                <div class=\"col-sm-10\">
+                                <input form='saveCV' type=\"date\" placeholder=\"End Date\" class=\"form-control\"  name=\"txtEndDate" . $i . "Edu" . "\" value = \"" . $endDate . "\"></div>
+                            </div>";
+                    }
+                    echo "
+                    <div class=\"form-group\">
+                        <form method='post' class='col-sm-offset-2'>
+                                <input type='submit' class='btn btn-danger' value='-' class=\"form-control\" name='btnAddEducation'>
+                        </form>
+                    </div>";
+                }
+                ?>
+            </div>
     <br/>
 
-    <div class="row rowMargin">
-        <span>First Name</span>
-        <input type="text" form="saveCV" name="txtFirstName" value="<?php echo $candidateLoggedIn->firstname; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Last Name</span>
-        <input type="text" form="saveCV" name="txtLastName" value="<?php echo $candidateLoggedIn->lastname; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>BirthDate</span>
-        <input type="date" form="saveCV" name="txtBirthDate" value="<?php echo $candidateLoggedIn->birthdate; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Address</span>
-        <input type="text" form="saveCV" name="txtAddress" value="<?php echo $candidateLoggedIn->address; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Phone</span>
-        <input type="text" form="saveCV" name="txtPhone" value="<?php echo $candidateLoggedIn->phone; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Email</span>
-        <input type="text" form="saveCV" name="txtEmail" value="<?php echo $candidateLoggedIn->email; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Career Level</span>
-        <input type="text" form="saveCV" name="txtCareerLevel"
-               value="<?php echo $cv != null ? $cv->career_level : ''; ?>">
-    </div>
-    <div class="row rowMargin">
-        <span>Education</span>
+    <!--            Professional Experience Info     -->
 
-        <form method="post" id="addEducationForm">
-            <input type="submit" class="btn btn-success" value="+" name="btnAddEducation" form="addEducationForm">
-        </form>
-        <!--            Education Info     -->
-        <?php
-        if (isset($_SESSION["education"]) && $_SESSION["education"] > 0) {
-            for ($i = 1; $i <= $_SESSION["education"]; $i++) {
-                $institution = $city = $position = $startDate = $endDate = '';
-                if (isset($educations[$i - 1])) {
-                    $institution = $educations[$i - 1]->institution;
-                    $city = $educations[$i - 1]->city;
-                    $startDate = $educations[$i - 1]->startDate;
-                    $endDate = $educations[$i - 1]->startDate;
-                }
-                echo "
-                    <div class=\"education\">
-                        <div class=\"city\">
-                            <span>City</span>
-                            <input form='saveCV' type=\"text\" name=\"txtCity" . $i . "Edu" . "\" value = \"" . $city . "\">
-                        </div>
-                        <div class=\"institution\">
-                            <span>Institution</span>
-                            <input form='saveCV' type=\"text\" name=\"txtInstitution" . $i . "Edu" . "\" value = \"" . $institution . "\">
-                        </div>
-                        <div class=\"startDate\">
-                            <span>Start Date</span>
-                            <input form='saveCV' type=\"date\" name=\"txtStartDate" . $i . "Edu" . "\" value = \"" . $startDate . "\">
-                        </div>
-                        <div class=\"endDate\">
-                            <span>End Date</span>
-                            <input form='saveCV' type=\"date\" name=\"txtEndDate" . $i . "Edu" . "\" value = \"" . $endDate . "\">
-                        </div>
-                    </div>
-                    <br/>";
-            }
-            echo "  <form method='post'>
-                            <input type='submit' class='btn btn-success' value='-' name='btnAddEducation'>
-                        </form>";
-        }
-        ?>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Professional Experience</label>
 
-    </div>
+            <form method="post">
+                <input type="submit" class="btn btn-success" value="+" name="btnAddProfessionalExperience">
+            </form>
+        </div>
 
-    <div class="row rowMargin">
-        <span>Professional Experience</span>
-
-        <form method="post">
-            <input type="submit" class="btn btn-success" value="+" name="btnAddProfessionalExperience">
-        </form>
-
-        <!--            Professional Experience Info     -->
         <?php
         if (isset($_SESSION["professionalExperience"]) && $_SESSION["professionalExperience"] > 0) {
             for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
@@ -141,41 +188,49 @@ $cv = $candidateLoggedIn->cv;
                 }
 
                 echo "
-                <div id='professionalExperience'>
-                    <div class='institution'>
-                        <span>Institution</span>
-                        <input form='saveCV' type='text' name='txtInstitution" . $i . "ProfEdu" . "' value='" . $institution . "'>
+                    <div class='institution form-group'>
+                        <label class=\"col-sm-2 control-label\">Institution</label>
+                         <div class=\"col-sm-10\">
+                        <input form='saveCV' type='text' placeholder=\"Institution\" class=\"form-control\" name='txtInstitution" . $i . "ProfEdu" . "' value='" . $institution . "'></div>
                     </div>
-                    <div class='city'>
-                        <span>City</span>s
-                        <input form='saveCV' type='text' name='txtCity" . $i . "ProfEdu" . "' value='" . $city . "'>
+                    <div class='city form-group'>
+                        <label class=\"col-sm-2 control-label\">City</label>
+                         <div class=\"col-sm-10\">
+                        <input form='saveCV' type='text' placeholder=\"City\" class=\"form-control\" name='txtCity" . $i . "ProfEdu" . "' value='" . $city . "'></div>
                     </div>
-                    <div class='position'>
-                        <span>Position</span>
-                        <input form='saveCV' type='text' name='txtPosition" . $i . "ProfEdu" . "' value='" . $position . "'>
+                    <div class='position form-group'>
+                        <label class=\"col-sm-2 control-label\">Position</label>
+                         <div class=\"col-sm-10\">
+                        <input form='saveCV' type='text' placeholder=\"Position\" class=\"form-control\" name='txtPosition" . $i . "ProfEdu" . "' value='" . $position . "'></div>
                     </div>
-                    <div class='startDate'>
-                        <span>Start Date</span>
-                        <input form='saveCV' type='date' name='txtStartDate" . $i . "ProfEdu" . "' value='" . $startDate . "'>
+                    <div class='startDate form-group'>
+                        <label class=\"col-sm-2 control-label\">Start Date</label>
+                         <div class=\"col-sm-10\">
+                        <input form='saveCV' type='date' placeholder=\"Start Date\" class=\"form-control\" name='txtStartDate" . $i . "ProfEdu" . "' value='" . $startDate . "'></div>
                     </div>
-                    <div class='endDate'>
-                        <span>End Date</span>
-                        <input form='saveCV' type='date' name='txtEndDate" . $i . "ProfEdu" . "' value='" . $endDate . "'>
+                    <div class='endDate form-group'>
+                        <label class=\"col-sm-2 control-label\">End Date</label>
+                         <div class=\"col-sm-10\">
+                        <input form='saveCV' type='date' placeholder=\"End Date\" class=\"form-control\" name='txtEndDate" . $i . "ProfEdu" . "' value='" . $endDate . "'></div>
                     </div>
-                </div>
                 <br/>";
             }
 
-            echo " <form method='post'>
-                        <input type='submit' class='btn btn-success' value='-' name='btnAddProfessionalExperience'>
-                    </form>";
+            echo "
+                    <div class=\"form-group\">
+                        <form method='post' class='col-sm-offset-2'>
+                        <input type='submit' class='btn btn-danger' value='-'  class=\"form-control\" name='btnAddProfessionalExperience'>
+                        </form>
+                    </div>";
         }
         ?>
 
-    </div>
-    <div class="row rowMargin">
-        <form id="saveCV" method="post">
+    <div class="form-group">
+        <form id="saveCV" method="post" class="col-sm-offset-6">
             <input type="submit" class="btn btn-success" value="Save" name="save">
         </form>
     </div>
+
 </div>
+<!--/.row-->
+<?php errorHandler::printErrorsOnStack(); ?>
