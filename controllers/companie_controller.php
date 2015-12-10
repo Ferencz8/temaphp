@@ -183,13 +183,16 @@ class CompanieController extends controller {
         $action = $this->params[0];
         switch ($action) {
             case 'post':
-                $this->post();
+                $job = new Job(time(), null, null, null, null);
+                $this->editJob($job);
                 break;
             case 'edit':
-                
+                //find job by id
+                $job = new Job(time(), 'Test job deja existent', null, null, null);
+                $this->editJob($job);
                 break;
             case 'delete':
-                
+                header("Location: /");
                 break;
 
             default:
@@ -198,21 +201,19 @@ class CompanieController extends controller {
         }
     }
 
-    public function post() {
+    public function editJob($job) {
         $headerLinks = $this->companieHeader();
         $headerLinks[2][2] = 'active';
-        require_once('views/companie/post.php');
 
-        if (isset($_POST['createcompany'])) {
-            $_SESSION['job'] = new Company(null, null);
-            $validForm = $this->validateFirstCreateForm($_SESSION['company']);
+        if (isset($_POST['jobedit'])) {
+            $validForm = $this->validateFirstCreateForm($job);
             if ($validForm) {
                 header("Location: /");
             } else {
-                require_once('views/companie/post.php');
+                require_once('views/companie/editJob.php');
             }
         } else {
-            require_once('views/companie/post.php');
+            require_once('views/companie/editJob.php');
         }
     }
 
