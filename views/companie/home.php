@@ -15,6 +15,7 @@
                     <th>Available Positions</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +29,8 @@
                     <th>' . $job->availablePositions . '</th>
                     <th>' . $job->startDate . '</th>
                     <th>' . $job->endDate . '</th>
-                </tr>';
+                    <th><a href="/companie/editJob/'.($key+1).'" class="btn btn-primary">Edit</a> <a href="/companie/deleteJob/'.($key+1).'" class="btn btn-danger">Delete</a></th>
+                </tr>'; //Id aici
                 }
                 ?>
             </tbody>
