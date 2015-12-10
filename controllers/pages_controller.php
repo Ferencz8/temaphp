@@ -41,7 +41,7 @@ class PagesController extends controller {
                     $_SESSION['loged'] = $candidate-> user-> id; //userid
                     //$_SESSION['loged']$_SESSION['logedCandidat'] = $candidate;
                     $_SESSION['accountType'] = 0; // 0- Candidat, 1- Companie
-                    header('Location: /candidat/home');
+                    header('Location: /');
                 }
                 else{
                     $_SESSION['loginerror'] = 'Username and/or password are incorect';

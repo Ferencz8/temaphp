@@ -183,7 +183,7 @@ class CandidatController extends controller
         $passwordRegex = '/^[a-zA-Z0-9]{6,}$/';
 
         if (isset($_POST["btnSaveNewUser"])) {
-            $user = new User(null, null, null);
+            $user = new User(time(), null, null);
             //Username
             if (isset($_POST["txtUsername"]) && $_POST["txtUsername"] !== '') {
                 if (!preg_match($usernameRegex, $_POST["txtUsername"])) {
