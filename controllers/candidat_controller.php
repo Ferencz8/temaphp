@@ -7,8 +7,7 @@ class CandidatController extends controller
 
     public function create()
     {
-        $headerLinks = $this->canditatHeader();
-        $headerLinks[0][2] = 'active';
+        
         if (isset($_POST['btnNextCreate'])) {
 
             $validForm = $this->validateFirstCreateForm();
