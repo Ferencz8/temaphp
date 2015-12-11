@@ -8,7 +8,8 @@
 
 function searchFile($fileName)
 {
-    $appDirectory = new RecursiveDirectoryIterator(dirname(__FILE__).'../../');
+    // $appDirectory = new RecursiveDirectoryIterator(dirname(__FILE__).'../../'); 
+    $appDirectory = new RecursiveDirectoryIterator(dirname(__FILE__).'/../'); 
     foreach (new RecursiveIteratorIterator($appDirectory) as $filename => $file) {
 
         if ($file->getFilename() === $fileName . ".php") {
