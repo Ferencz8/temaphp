@@ -7,7 +7,7 @@
   </head>
   <body>
 
-    <?php require_once('routes.php'); ?>
+    <?php require_once('core/routes.php'); ?>
 
 <!--    <footer>
       Copyright
