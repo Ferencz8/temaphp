@@ -12,4 +12,11 @@ if(!isset($_SESSION['candidates'])){
     $candidate = new Candidate(time(), 'ferencz', 'veres', '2010-03-21', 'area', '0123456789', 'ferenczv@gmail.com', '0', $user, $cv);
     $_SESSION['candidates'] = array($candidate);
 }
-?>
+
+
+if(!isset($_SESSION['companys'])){
+    $user = new User(time(), 'marius', '123456');
+    $company = new Company(time(), 'Compania mea', 'descriere smechera', 'acasa', '0747000123', 'partoaca.marius@gmail.com', 'not selecter', null, null, $user);
+    
+    $_SESSION['companys'] = array($company);
+}
