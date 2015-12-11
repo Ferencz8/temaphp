@@ -70,10 +70,10 @@
                     <th>' . $job->availablePositions . '</th>
                     <th>' . $job->startDate . '</th>
                     <th>' . $job->endDate . '</th>
-                    <th><a href="/companie/job/candidates/' . ($key + 1) . '" class="btn btn-success">View CVs</a> '
-                            . '<a href="/companie/job/delete/' . ($key + 1) . '" class="btn btn-danger">Delete</a> '
-                            . '<a href="/companie/job/edit/' . ($key + 1) . '" class="btn btn-primary">Edit</a></th>'.
-                '</tr>'; //Id aici
+                    <th><a href="/companie/job/candidates/' . ($key + 1) . '" class="btn btn-success">View Aplications</a> '
+                    . '<a href="/companie/job/edit/' . ($key + 1) . '" class="btn btn-primary">Edit</a> '
+                    . '<a href="/companie/job/delete/' . ($key + 1) . '" class="btn btn-danger">Delete</a></th> '.
+                    '</tr>'; //Id aici
                 }
                 ?>
             </tbody>

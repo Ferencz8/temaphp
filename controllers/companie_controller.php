@@ -197,7 +197,7 @@ class CompanieController extends controller {
                 break;
             
             case 'candidates':
-                viewJob($this->params[1]);
+                $this->viewJob($this->params[1]);
                 break;
 
             default:
@@ -208,7 +208,7 @@ class CompanieController extends controller {
     
     public function viewJob($jobId) {
         $job = new Job(time(), 'Test job deja existent', null, null, null);
-        $cvs = array();
+        $candidateList = $_SESSION['candidates'];
         require_once('views/companie/viewJob.php');
     }
 
@@ -232,7 +232,7 @@ class CompanieController extends controller {
         return array(
             array('/', '<span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home', ''),
             array('/companie/edit', '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Edit Account', ''),
-            array('/companie/job/post', '<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Post Job', ''),
+            array('/companie/job/post', '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Post Job', ''),
             array('/logout', 'Logout', 'navbar-right')
         );
     }
