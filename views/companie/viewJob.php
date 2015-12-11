@@ -28,7 +28,7 @@
                     <th>' . $candidat->lastname . '</th>
                     <th>' . $candidat->email . '</th>
                     <th>' . $candidat->cv->career_level . '</th>
-                    <th><a href="/' . $candidat->id . '" class="btn btn-success">View</a> '
+                    <th><a href="/candidat/viewCandidate/' . $candidat->id . '" class="btn btn-success">View</a> '
                             . '<a href="/companie/job/reject/' . $candidat->id . '" class="btn btn-danger">Reject</a> '
                             . '<a href="/companie/job/accept/' . $candidat->id . '" class="btn btn-primary">Accept</a></th>'.
                 '</tr>'; //Id aici
