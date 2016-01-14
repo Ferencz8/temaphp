@@ -5,10 +5,11 @@ include_once 'controller.php';
 class CompanieController extends controller {
 
     protected $companyRepository;
-
+    protected $jobRepository;
     function __construct($params) {
         parent::__construct($params);
         $this->companyRepository = new CompanyRepository();
+        $this -> jobRepository = new JobRepository();
     }
 
     public function create() {
@@ -144,10 +145,11 @@ class CompanieController extends controller {
     public function home() {
         $headerLinks = $this->companieHeader();
         $headerLinks[0][2] = 'active';
-        $jobList = array(
-            new Job("",new Company("", "Software"), "TestTitle", "", "", "" ),
-            new Job("", new Company("", "Software"), "Title 2", "", "", "")
-        );
+        $jobList = $this -> jobRepository -> getCompanyJobsForUser($_SESSION['loged']);
+//        $jobList = array(
+//            new Job("",new Company("", "Software"), "TestTitle", "", "", "",null,null,null,null ),
+//            new Job("", new Company("", "Software"), "Title 2", "", "", "",null,null,null,null)
+//        );
         require_once('views/companie/home.php');
     }
 
@@ -179,13 +181,13 @@ class CompanieController extends controller {
         $action = $this->params[0];
         switch ($action) {
             case 'post':
-                $job = new Job(time(), null, null, null, null);
+                $job = new Job(time(),new Company(null, null), null, null, null, null, null, null, null, null);
                 $this->editJob($job);
                 break;
             case 'edit':
                 //find job by id
                 //check $this->params[1];
-                $job = new Job(time(), 'Test job deja existent', null, null, null);
+                $job = new Job(time(),new Company(null, null), 'Test job deja existent', null, null, null, null, null, null);
                 $this->editJob($job);
                 break;
             case 'delete':
@@ -203,7 +205,7 @@ class CompanieController extends controller {
     }
     
     public function viewJob($jobId) {
-        $job = new Job(time(), 'Test job deja existent', null, null, null);
+        $job = new Job(time(),null, 'Test job deja existent', null, null, null, null, null, null);
         $candidateList = $_SESSION['candidates'];
         require_once('views/companie/viewJob.php');
     }
@@ -213,8 +215,19 @@ class CompanieController extends controller {
         $headerLinks[2][2] = 'active';
 
         if (isset($_POST['jobedit'])) {
-            $validForm = $this->validateFirstCreateForm($job);
+            $job -> setTitle($_POST['title']);
+            $job -> setDescription($_POST['description']);
+            $job -> setAvailablepositions($_POST['pos']);
+            $job -> setStartDate($_POST['date1']);
+            $job -> setEndDate($_POST['date2']);
+            $job -> setCities($_POST['cities']);
+            $job -> setCareerlevel($_POST['level']);
+
+            $validForm = true;//$this->validateFirstCreateForm($job); TODO:: refacut validare,  asta nu e corecta pt un Job
             if ($validForm) {
+                $company = $this->companyRepository-> getCompanyByUserId($_SESSION['loged']);
+                $job -> company= $company;
+                $this->jobRepository -> create($job);
                 header("Location: /");
             } else {
                 require_once('views/companie/editJob.php');

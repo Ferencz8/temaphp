@@ -20,13 +20,16 @@ class JobRepository{
         try {
 
             $null = null;
-            $req = $this->db->prepare('INSERT INTO jobs VALUES(:id,:companyId, :title, :availablepositions, :startdate, :enddate)');
-            $req->bindParam(':id', $job->id);
-            $req->bindParam(':companyId', $job->companyId);
-            $req->bindParam(':title', $job->title);
-            $req->bindParam(':availablepositions', $job->availablepositions);
-            $req->bindParam(':startdate', $job->startdate);
-            $req->bindParam(':enddate', $job->enddate);
+            $req = $this->db->prepare('INSERT INTO jobs VALUES(:id,:companyId, :title, :availablepositions, :startdate, :enddate, :description, :cities, :careerlevel)');
+            $req->bindParam(':id', $job->getId());
+            $req->bindParam(':companyId', !is_null($job->getCompany()) ? $job->getCompany()->id : $null );
+            $req->bindParam(':title', $job->getTitle());
+            $req->bindParam(':availablepositions', $job->getAvailablepositions());
+            $req->bindParam(':startdate', $job->getStartDate());
+            $req->bindParam(':enddate', $job->getEndDate());
+            $req->bindParam(':description', $job->getDescription());
+            $req->bindParam(':cities', $job->getCities());
+            $req->bindParam(':careerlevel', $job->getCareerlevel());
 
             $req->execute();
         } catch (PDOException $e) {
@@ -47,13 +50,28 @@ class JobRepository{
         return $job;
     }
 
-    public function getForUser($userId){
+    public function getCompanyJobsForUser($userId){
+        // we make sure $id is an integer
+        $id = intval($userId);
+
+        $req = $this->db->prepare(' select jobs.* from jobs
+                                    inner join Companies on Companies.id = jobs.companyid
+                                    where Companies.userId = :id');
+        $req->execute(array('id' => $id));
+        $res = $req->fetchAll();
+
+        $jobs = Job::getModels($res);
+
+        return $jobs;
+    }
+
+    public function getJobsForUser($userId){
         // we make sure $id is an integer
         $id = intval($userId);
 
         $req = $this->db->prepare('SELECT * FROM jobs WHERE id = :id');
         $req->execute(array('id' => $id));
-        $res = $req->fetch();
+        $res = $req->fetchAll();
 
         $jobs = Job::getModels($res);
 
@@ -62,7 +80,20 @@ class JobRepository{
 
     public function getAllJobs(){
         $req = $this->db->prepare('SELECT * FROM jobs WHERE id = :id');
-        $res = $req->fetch();
+        $res = $req->fetchAll();
+
+        $jobs = Job::getModels($res);
+
+        return $jobs;
+    }
+
+    public function getJobsForCompany($companyId){
+        // we make sure $id is an integer
+        $id = intval($companyId);
+
+        $req = $this->db->prepare('SELECT * FROM jobs  WHERE companyid = :id');
+        $req->execute(array('id' => $id));
+        $res = $req->fetchAll();
 
         $jobs = Job::getModels($res);
 

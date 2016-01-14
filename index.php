@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 require_once 'models/BaseModel.php';
 require_once 'models/Candidate.php';
 require_once 'models/Company.php';
@@ -23,7 +23,7 @@ $uriParams = explode('?', $requestedUrl);
 
 if(count($uriParams) == 2){$requestedUrl = $uriParams[0];}
 
-$data = split('/', $requestedUrl);
+$data = explode('/', $requestedUrl);
 array_shift($data);
 //var_dump($data);
 if (count($data) >= 2) {

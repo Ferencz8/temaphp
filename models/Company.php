@@ -37,6 +37,6 @@ class Company extends BaseModel{
 
     public static function getModel($res){
         $user = new User($res['userId'],null,null,null);
-        return new Company($res['id'], $res['name'], $res['description'], $res['address'], $res['phone'], $res['email'], $res['logo'],$res['cities'],$res['cities'],$res['activityDomains'],$res['$user'], null);
+        return new Company($res['id'], $res['name'], $res['description'], $res['address'], $res['phone'], $res['email'], $res['logo'],$res['cities'],$res['cities'],null,$user, null);
     }
 }

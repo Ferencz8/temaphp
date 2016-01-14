@@ -56,7 +56,7 @@ class CandidatController extends controller
 //            new Job(time(), "Title 2", "", "", "", new Company("", "Software"))
 //        );
 
-        $this -> jobRepository -> getForUser($_SESSION['loged']);
+        $this -> jobRepository -> getJobsForUser($_SESSION['loged']);
         require_once('views/candidat/home.php');
     }
 
