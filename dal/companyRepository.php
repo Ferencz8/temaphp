@@ -13,7 +13,7 @@ class CompanyRepository {
         $req->execute(array('id' => $id));
         $res = $req->fetch();
         //var_dump($res
-        var_dump($res);
+        var_dump($res);  
         $companie = new Company($res->id,null);
         //aici puneai fiecare proprietate sau faci la clasa o metoda care primeste un array si scoate din el
         //($id, $name, $description = null, $address = null, $phone = null, $email = null, $logo = null, $cities = null, $activityDomains = null, $user = null, $jobs = array())

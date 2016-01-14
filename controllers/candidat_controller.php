@@ -33,11 +33,12 @@ class CandidatController extends controller
             $validForm = $this->validateSecondCreateForm();
             if ($validForm) {
                 //TODO:: store newly creadet user
-                if(!isset($_SESSION["candidates"])) {
-                    $_SESSION["candidates"] = array();
-                }
-
-                array_push($_SESSION["candidates"], $_SESSION["candidate"]);
+                  $this->candidateRepository->create($_SESSION["candidate"]);
+//                if(!isset($_SESSION["candidates"])) {
+//                    $_SESSION["candidates"] = array();
+//                }
+//
+//                array_push($_SESSION["candidates"], $_SESSION["candidate"]);
                 unset($_SESSION["candidate"]);
                 require_once('views/pages/home.php');
             } else {
@@ -54,8 +55,8 @@ class CandidatController extends controller
         $headerLinks = $this->canditatHeader();
         $headerLinks[0][2] = 'active';
         $jobList = array(
-            new Job("", "TestTitle", "", "", "", new Company("", "Software")),
-            new Job("", "Title 2", "", "", "", new Company("", "Software"))
+            new Job(time(), "TestTitle", "", "", "", new Company("", "Software")),
+            new Job(time(), "Title 2", "", "", "", new Company("", "Software"))
         );
         require_once('views/candidat/home.php');
     }
@@ -68,7 +69,10 @@ class CandidatController extends controller
             $editform = $this->validateEditCVForm();
             if($editform != null){
                 $editform -> id = $candidateLoggedIn -> id;
+                $editform -> user = new User($candidateLoggedIn -> user -> id, null, null, null);
                 $this -> candidateRepository -> updateCandidate($editform);
+
+                $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
                 header("Location: /candidat/view");
             }
         }
@@ -77,6 +81,33 @@ class CandidatController extends controller
         $headerLinks = $this->canditatHeader();
         $headerLinks[1][2] = 'active';
         require_once('views/candidat/edit.php');
+    }
+
+    public function job(){
+        if($this -> params == null || count($this->params) == 0){
+            header('Location: /');
+        }
+        $action = $this->params[0];
+        switch($action){
+            case 'apply':
+                $jobId = $this -> params[1];
+                $this -> applyToJob($jobId);
+                break;
+            default:
+                header('Location: /');
+                break;
+        }
+    }
+
+    public function applyToJob($jobId){
+        $candidateLoggedIn = $this -> candidateRepository -> getCandidateByUserId($_SESSION['loged']);
+        if($candidateLoggedIn!=null)
+        {
+            $this -> candidateRepository -> updateCandidateAppliedJobs($candidateLoggedIn -> id, $jobId);
+        }
+        else{
+
+        }
     }
 
     public function view()
@@ -190,7 +221,7 @@ class CandidatController extends controller
         $passwordRegex = '/^[a-zA-Z0-9]{6,}$/';
 
         if (isset($_POST["createUser"])) {
-            $user = new User(time(), null, null);
+            $user = new User(time(), null, null, null);
             //Username
             if (isset($_POST["txtUsername"]) && $_POST["txtUsername"] !== '') {
                 if (!preg_match($usernameRegex, $_POST["txtUsername"])) {

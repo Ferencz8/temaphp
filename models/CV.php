@@ -25,4 +25,8 @@ class CV extends BaseModel{
             return $this -> $property;
         }
     }
+
+    public static function getModel($res){
+        return new Company($res['id'], $res['careerLevel']);
+    }
 }

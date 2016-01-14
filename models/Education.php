@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Ferencz
  * Date: 11/16/2015
  * Time: 3:09 PM
  */
-
-
-class Education extends BaseModel{
+class Education extends BaseModel
+{
 
     protected $id;
     protected $cvId;//FK
@@ -33,5 +33,10 @@ class Education extends BaseModel{
         $this->institution = $institution;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+    }
+
+    public static function getModel($res)
+    {
+        return new Education($res['id'], $res['cvId'], $res['city'], $res['institution'], $res['startDate'], $res['endDate']);
     }
 }

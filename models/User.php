@@ -11,10 +11,16 @@ class User extends BaseModel
     protected $id;
     protected $username;
     protected $password;
+    protected $accounttype;
 
-    function __construct($id, $un, $p){
+    function __construct($id, $un, $p, $a){
         $this -> id = $id;
         $this -> username = $un;
         $this -> password = $p;
+        $this -> accounttype = $a;
+    }
+
+    public static function getModel(array $res){
+        return new User($res['id'], $res['username'], $res['password'], $res['accounttype']);
     }
 }

@@ -18,7 +18,7 @@ class Candidate extends BaseModel{
     protected $cv;
     protected $appliedJobs;
 
-    function __construct($id, $fn, $ln, $birthdate, $address, $phone, $email,$appliedJobs, User $u = NULL, CV $cv = NULL){
+    function __construct($id, $fn, $ln, $birthdate, $address, $phone, $email, $appliedJobs, User $u = NULL, CV $cv = NULL){
         $this -> id = $id;
         $this -> firstname = $fn;
         $this -> lastname = $ln;
@@ -29,5 +29,11 @@ class Candidate extends BaseModel{
         $this -> appliedJobs = $appliedJobs;
         $this -> user = $u;
         $this -> cv = $cv;
+    }
+
+    public static function getModel($res){
+        $user = new User($res['userId'],null,null,null);
+        $cv = new CV($res['cvId'], null);
+        return new Candidate($res['id'], $res['firstname'], $res['lastname'], $res['birthdate'], $res['address'], $res['phone'], $res['email'], null,$user, $cv);
     }
 }

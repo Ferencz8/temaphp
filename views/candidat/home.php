@@ -55,6 +55,7 @@
                     <th>Available Positions</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +69,9 @@
                     <th>' . $job->availablePositions . '</th>
                     <th>' . $job->startDate . '</th>
                     <th>' . $job->endDate . '</th>
+                    <th>
+                    <a href = "/candidat/job/apply/' . $job -> id. '" class="btn btn-success">Apply</a>
+                    </th>
                 </tr>';
                 }
                 ?>

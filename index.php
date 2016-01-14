@@ -15,16 +15,22 @@ require_once('core/connection.php');
 require_once('core/autoloader.php');
 require_once('core/errorHandler.php');
 
-include('core/initValues.php');
+//include('core/initValues.php');
 
-$data = split('/', $_SERVER['REQUEST_URI']);
+
+$requestedUrl = $_SERVER['REQUEST_URI'];
+$uriParams = explode('?', $requestedUrl);
+
+if(count($uriParams) == 2){$requestedUrl = $uriParams[0];}
+
+$data = split('/', $requestedUrl);
 array_shift($data);
 //var_dump($data);
 if (count($data) >= 2) {
     
     $controller = $data[0];
-    $debuggerAction = explode('?', $data[1]);
-    $action = $debuggerAction[0];//$data[1];
+    //$debuggerAction = explode('?', $data[1]);
+    $action = $data[1];//$debuggerAction[0];//$data[1];
     $data = array_slice($data, 2);
 } else {
     
