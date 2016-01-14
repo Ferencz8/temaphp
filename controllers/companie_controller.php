@@ -26,11 +26,7 @@ class CompanieController extends controller {
             $validForm = $this->validateSecondCreateForm();
             if ($validForm) {
                 //TODO:: store newly creadet user
-                if (!isset($_SESSION["companys"])) {
-                    $_SESSION["companys"] = array();
-                }
-
-                array_push($_SESSION["companys"], $_SESSION["company"]);
+                $this-> companyRepository -> create($_SESSION["company"]);
                 unset($_SESSION["company"]);
                 require_once('views/pages/home.php');
             } else {
@@ -149,8 +145,8 @@ class CompanieController extends controller {
         $headerLinks = $this->companieHeader();
         $headerLinks[0][2] = 'active';
         $jobList = array(
-            new Job("", "TestTitle", "", "", "", new Company("", "Software")),
-            new Job("", "Title 2", "", "", "", new Company("", "Software"))
+            new Job("",new Company("", "Software"), "TestTitle", "", "", "" ),
+            new Job("", new Company("", "Software"), "Title 2", "", "", "")
         );
         require_once('views/companie/home.php');
     }

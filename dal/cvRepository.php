@@ -28,7 +28,7 @@ protected $educationRepository;
             $req->execute();
 
             for($i = 0; $i < count($cv->educations); $i++){
-                $cv->educations[$i]->id = time() + 1;//mai multe entitati au acelasi id
+                $cv->educations[$i]->setd = time() + 1;//mai multe entitati au acelasi id
                 $cv->educations[$i]->cvId = $cv ->id;
                 if($i > 0)
                     $cv->educations[$i]->id = $cv->educations[$i-1]->id + 1; //da e departe de solutia ideala...dar merge.

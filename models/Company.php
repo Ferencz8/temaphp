@@ -20,12 +20,6 @@ class Company extends BaseModel{
     protected $user;
     
     protected $jobs;
-
-//    function __construct($id, $name,array $jobs = array()){
-//        $this -> id = $id;
-//        $this -> name = $name;
-//        $this -> jobs = $jobs;
-//    }
     
     function __construct($id, $name, $description = null, $address = null, $phone = null, $email = null, $logo = null, $cities = null, $activityDomains = null, $user = null, $jobs = array()) {
         $this->id = $id;

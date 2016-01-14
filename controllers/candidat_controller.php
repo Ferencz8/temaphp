@@ -7,12 +7,14 @@ class CandidatController extends controller
 
     protected $candidateRepository;
     protected $cvRepository;
+    protected $jobRepository;
 
     function __construct($params)
     {
         parent::__construct($params);
         $this -> candidateRepository = new CandidateRepository();
         $this -> cvRepository = new CVRepository();
+        $this -> jobRepository = new JobRepository();
     }
 
     public function create()
@@ -34,11 +36,6 @@ class CandidatController extends controller
             if ($validForm) {
                 //TODO:: store newly creadet user
                   $this->candidateRepository->create($_SESSION["candidate"]);
-//                if(!isset($_SESSION["candidates"])) {
-//                    $_SESSION["candidates"] = array();
-//                }
-//
-//                array_push($_SESSION["candidates"], $_SESSION["candidate"]);
                 unset($_SESSION["candidate"]);
                 require_once('views/pages/home.php');
             } else {
@@ -54,10 +51,12 @@ class CandidatController extends controller
     {
         $headerLinks = $this->canditatHeader();
         $headerLinks[0][2] = 'active';
-        $jobList = array(
-            new Job(time(), "TestTitle", "", "", "", new Company("", "Software")),
-            new Job(time(), "Title 2", "", "", "", new Company("", "Software"))
-        );
+//        $jobList = array(
+//            new Job(time(), "TestTitle", "", "", "", new Company("", "Software")),
+//            new Job(time(), "Title 2", "", "", "", new Company("", "Software"))
+//        );
+
+        $this -> jobRepository -> getForUser($_SESSION['loged']);
         require_once('views/candidat/home.php');
     }
 
