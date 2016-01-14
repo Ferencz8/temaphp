@@ -89,7 +89,7 @@
                         <div class=\"startDate  form-group\">
                            <label class=\"col-sm-2 control-label\">Start Date</label>
                            <div class=\"col-sm-10\">
-                                    <input form='saveCV' type=\"date\" placeholder=\"Start Date\" class=\"form-control\"  name=\"txtStartDate" . $i . "Edu" . "\" value=\"" . $cv->educations[$i - 1]->startDate . "\" disabled = 'true'>
+                                    <input form='saveCV' type=\"date\" placeholder=\"Start Date\" class=\"form-control\"  name=\"txtStartDate" . $i . "Edu" . "\" value=\"" . $cv->educations[$i - 1]->startdate . "\" disabled = 'true'>
                            </div>
                         </div>
                         <div class=\"endDate  form-group\">

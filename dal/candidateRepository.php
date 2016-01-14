@@ -45,12 +45,6 @@ class CandidateRepository
 
     public function getCandidateByUserId($userId)
     {
-//        for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {
-//            $currentCandidate = $_SESSION["candidates"][$i];
-//            if ($currentCandidate->user->id == $userId)
-//                return $currentCandidate;
-//        }
-//        return null;
 
         $id = intval($userId);
 
@@ -64,9 +58,15 @@ class CandidateRepository
 
         $req = $this->db->prepare('SELECT * FROM educations WHERE cvId = :id');
         $req->execute(array('id' => $candidate->cv->id));
-        $res = $req->fetch();
+        $res = $req->fetchAll();
 
-        //$candidate -> cv -> educations = Education::getModels(res);
+        $candidate -> cv -> educations = Education::getModels($res);
+
+        $req = $this->db->prepare('SELECT * FROM professionalexperiences WHERE cvId = :id');
+        $req->execute(array('id' => $candidate->cv->id));
+        $res = $req->fetchAll();
+
+        $candidate -> cv -> professional_experiences = ProfessionalExperience::getModels($res);
         return $candidate;
     }
 
@@ -91,19 +91,6 @@ class CandidateRepository
         } catch (PDOException $e) {
 
         }
-//        for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {
-//            $currentCandidate = $_SESSION["candidates"][$i];
-//            if ($currentCandidate->id == $candidate->id) {
-//                $currentCandidate->firstname = $candidate->firstname;
-//                $currentCandidate->lastname = $candidate->lastname;
-//                $currentCandidate->birthdate = $candidate->birthdate;
-//                $currentCandidate->address = $candidate->address;
-//                $currentCandidate->phone = $candidate->phone;
-//                $currentCandidate->email = $candidate->email;
-//                $currentCandidate->cv = $candidate->cv;
-//                break;
-//            }
-//        }
     }
 
     public function updateCandidateAppliedJobs($candidateId, $jobId)

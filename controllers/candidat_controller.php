@@ -270,18 +270,18 @@ class CandidatController extends controller
         unset($_SESSION['candidate']);
 
         $cv = new CV(time(), $_POST["txtCareerLevel"]);
-        $cv -> id = time();
+
         for ($i = 1; $i <= $_SESSION["education"]; $i++) {
-            array_push($cv->educations, new Education(time(), $_POST["txtCity" . $i . "Edu"], $_POST["txtInstitution" . $i . "Edu"], $_POST["txtStartDate" . $i . "Edu"], $_POST["txtEndDate" . $i . "Edu"] ));
+            array_push($cv->educations, new Education(time(),null, $_POST["txtCity" . $i . "Edu"], $_POST["txtInstitution" . $i . "Edu"], $_POST["txtStartDate" . $i . "Edu"], $_POST["txtEndDate" . $i . "Edu"] ));
         }
 
         for ($i = 1; $i <= $_SESSION["professionalExperience"]; $i++) {
-            array_push($cv->professional_experiences, new ProfessionalExperience(time(), null, null, null, null,null));
-            $cv->professional_experiences[$i - 1]->city = $_POST["txtCity" . $i . "ProfEdu"];
-            $cv->professional_experiences[$i - 1]->institution = $_POST["txtInstitution" . $i . "ProfEdu"];
-            $cv->professional_experiences[$i - 1]->startDate = $_POST["txtStartDate" . $i . "ProfEdu"];
-            $cv->professional_experiences[$i - 1]->endDate = $_POST["txtEndDate" . $i . "ProfEdu"];
-            $cv->professional_experiences[$i - 1]->position = $_POST["txtPosition" . $i . "ProfEdu"];
+            array_push($cv->professional_experiences, new ProfessionalExperience(time(),null,
+                $_POST["txtCity" . $i . "ProfEdu"],
+                $_POST["txtInstitution" . $i . "ProfEdu"],
+                $_POST["txtStartDate" . $i . "ProfEdu"],
+                $_POST["txtEndDate" . $i . "ProfEdu"],
+                $_POST["txtPosition" . $i . "ProfEdu"]));
         }
 
         $candidate -> cv = $cv;

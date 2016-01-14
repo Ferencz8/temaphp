@@ -2,19 +2,24 @@
 
 <?php
 
+function formatTime($time){
+    if($time) {
+        preg_match('/(\d{4}-\d{2}-\d{2})/', $time, $match);
+        return $match[0];
+    }
+    return null;
+}
+
 if ($candidateLoggedIn != null) {
     $educations = $professional_experiences = array();
     if ($candidateLoggedIn->cv != null) {
         $educations = $candidateLoggedIn->cv->educations;
         $professional_experiences = $candidateLoggedIn->cv->professional_experiences;
-
-        $_SESSION["education"] = count($educations);
-        $_SESSION["professionalExperience"] = count($professional_experiences);
     }
 }
 
 if (!isset($_SESSION["education"])) {
-    $_SESSION["education"] = 0;
+    $_SESSION["education"]= count($educations);
 }
 
 if (isset($_POST["btnAddEducation"])) {
@@ -28,7 +33,7 @@ if (isset($_POST["btnAddEducation"])) {
 }
 
 if (!isset($_SESSION["professionalExperience"])) {
-    $_SESSION["professionalExperience"] = 0;
+    $_SESSION["professionalExperience"] = count($professional_experiences);
 }
 
 
@@ -72,7 +77,7 @@ $cv = $candidateLoggedIn->cv;
 
                 <div class="col-sm-10">
                     <input type="date" form="saveCV" class="form-control" name="txtBirthDate"
-                           value="<?php echo $candidateLoggedIn->birthdate; ?>">
+                           value="<?php echo formatTime($candidateLoggedIn->birthdate); ?>">
                 </div>
             </div>
             <div class="form-group">
@@ -126,8 +131,8 @@ $cv = $candidateLoggedIn->cv;
                         if (isset($educations[$i - 1])) {
                             $institution = $educations[$i - 1]->institution;
                             $city = $educations[$i - 1]->city;
-                            $startDate = $educations[$i - 1]->startDate;
-                            $endDate = $educations[$i - 1]->startDate;
+                            $startDate = formatTime($educations[$i - 1]->startdate);
+                            $endDate = formatTime($educations[$i - 1]->enddate);
                         }
                         echo "
                             <div class=\"city form-group\">
@@ -181,8 +186,8 @@ $cv = $candidateLoggedIn->cv;
                     $institution = $professional_experiences[$i - 1]->institution;
                     $city = $professional_experiences[$i - 1]->city;
                     $position = $professional_experiences[$i - 1]->position;
-                    $startDate = $professional_experiences[$i - 1]->startDate;
-                    $endDate = $professional_experiences[$i - 1]->startDate;
+                    $startDate =  formatTime($professional_experiences[$i - 1]->startDate);
+                    $endDate =  formatTime($professional_experiences[$i - 1]->startDate);
                 }
 
                 echo "

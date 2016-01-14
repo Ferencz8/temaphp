@@ -10,10 +10,12 @@ class CVRepository{
 
     protected $db;
 protected $educationRepository;
+    protected $professionalexperienceRepository;
     function __construct()
     {
         $this->db = Db::getInstance();
         $this -> educationRepository = new EducationRepository();
+        $this -> professionalexperienceRepository = new ProfessionalExperiencesRepository();
     }
 
     public function create($cv){
@@ -25,9 +27,20 @@ protected $educationRepository;
 
             $req->execute();
 
-            foreach($cv -> educations as $element){
-                $element->cvId = $cv ->id;
-                $this -> educationRepository -> create($element);
+            for($i = 0; $i < count($cv->educations); $i++){
+                $cv->educations[$i]->id = time() + 1;//mai multe entitati au acelasi id
+                $cv->educations[$i]->cvId = $cv ->id;
+                if($i > 0)
+                    $cv->educations[$i]->id = $cv->educations[$i-1]->id + 1; //da e departe de solutia ideala...dar merge.
+                $this -> educationRepository -> create($cv->educations[$i]);
+            }
+
+            for($i = 0; $i < count($cv->professional_experiences); $i++){
+                $cv->professional_experiences[$i]->id = time() + 1;//mai multe entitati au acelasi id
+                $cv->professional_experiences[$i]->cvId = $cv ->id;
+                if($i > 0)
+                    $cv->professional_experiences[$i]->id = $cv->professional_experiences[$i-1]->id + 1; //da e departe de solutia ideala...dar merge.
+                $this -> professionalexperienceRepository -> create($cv->professional_experiences[$i]);
             }
         } catch (PDOException $e) {
 
