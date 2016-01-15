@@ -186,8 +186,8 @@ $cv = $candidateLoggedIn->cv;
                     $institution = $professional_experiences[$i - 1]->institution;
                     $city = $professional_experiences[$i - 1]->city;
                     $position = $professional_experiences[$i - 1]->position;
-                    $startDate =  formatTime($professional_experiences[$i - 1]->startDate);
-                    $endDate =  formatTime($professional_experiences[$i - 1]->startDate);
+                    $startDate =  formatTime($professional_experiences[$i - 1]->startdate);
+                    $endDate =  formatTime($professional_experiences[$i - 1]->startdate);
                 }
 
                 echo "
