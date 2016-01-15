@@ -103,6 +103,7 @@ class CandidatController extends controller
         else{
 
         }
+        header('Location: /');
     }
 
     public function view()

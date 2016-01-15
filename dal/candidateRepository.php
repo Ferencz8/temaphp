@@ -95,14 +95,24 @@ class CandidateRepository
 
     public function updateCandidateAppliedJobs($candidateId, $jobId)
     {
+        try {
+            $null = null;
+            $req = $this->db->prepare('INSERT INTO appliedjobs VALUES (:candidateId, :jobId)');
+            $req->bindParam(':candidateId', $candidateId);
+            $req->bindParam(':jobId',$jobId );
 
-        for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {
-            $currentCandidate = $_SESSION["candidates"][$i];
-            if ($currentCandidate->id == $candidateId) {
-                array_push($currentCandidate->appliedJobs, new Job($jobId, null, null, null, null, null));
-                break;
-            }
+            $req->execute();
+        } catch (PDOException $e) {
+
         }
+
+//        for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {
+//            $currentCandidate = $_SESSION["candidates"][$i];
+//            if ($currentCandidate->id == $candidateId) {
+//                array_push($currentCandidate->appliedJobs, new Job($jobId, null, null, null, null, null));
+//                break;
+//            }
+//        }
     }
 
     public function getCandidateByCVId($cvId)

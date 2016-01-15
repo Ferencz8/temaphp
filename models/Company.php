@@ -19,9 +19,9 @@ class Company extends BaseModel{
     protected $activityDomains;
     protected $user;
     
-    protected $jobs;
+    protected $appliedjobs;
     
-    function __construct($id, $name, $description = null, $address = null, $phone = null, $email = null, $logo = null, $cities = null, $activityDomains = null, $user = null, $jobs = array()) {
+    function __construct($id, $name, $description = null, $address = null, $phone = null, $email = null, $logo = null, $cities = null, $activityDomains = null, $user = null, $appliedjobs = array()) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -32,7 +32,7 @@ class Company extends BaseModel{
         $this->cities = $cities;
         $this->activityDomains = $activityDomains;
         $this->user = $user;
-        $this->jobs = $jobs;
+        $this->appliedjobs = $appliedjobs;
     }
 
     public static function getModel($res){
