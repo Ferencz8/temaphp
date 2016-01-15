@@ -51,12 +51,8 @@ class CandidatController extends controller
     {
         $headerLinks = $this->canditatHeader();
         $headerLinks[0][2] = 'active';
-//        $jobList = array(
-//            new Job(time(), "TestTitle", "", "", "", new Company("", "Software")),
-//            new Job(time(), "Title 2", "", "", "", new Company("", "Software"))
-//        );
 
-        $this -> jobRepository -> getJobsForUser($_SESSION['loged']);
+        $jobList = $this -> jobRepository -> getAllJobs();
         require_once('views/candidat/home.php');
     }
 

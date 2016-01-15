@@ -79,7 +79,7 @@ class JobRepository{
     }
 
     public function getAllJobs(){
-        $req = $this->db->prepare('SELECT * FROM jobs WHERE id = :id');
+        $req = $this->db->query('SELECT * FROM jobs');
         $res = $req->fetchAll();
 
         $jobs = Job::getModels($res);
