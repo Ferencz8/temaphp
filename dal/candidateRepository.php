@@ -103,7 +103,6 @@ class CandidateRepository
 
             $req->execute();
         } catch (PDOException $e) {
-
         }
 
 //        for ($i = 0; $i < count($_SESSION["candidates"]); $i++) {

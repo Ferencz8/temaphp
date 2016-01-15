@@ -51,8 +51,14 @@ class CandidatController extends controller
     {
         $headerLinks = $this->canditatHeader();
         $headerLinks[0][2] = 'active';
+        if (isset($_POST["Cauta"]))
+        {
+            $jobList = $this -> jobRepository ->searchJob($_POST['job'],$_POST['city'],$_POST['career']);
+        }
+        else
+                    $jobList = $this -> jobRepository -> getAllJobs();
+        $citySelect =  $this->jobRepository->getCitySelect();
 
-        $jobList = $this -> jobRepository -> getAllJobs();
         require_once('views/candidat/home.php');
     }
 

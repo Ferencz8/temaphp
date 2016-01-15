@@ -121,4 +121,34 @@ class JobRepository{
 
         return $jobs;
     }
+    
+    public function searchJob($name,$city,$career)
+    {
+        $city2 = '%'.$city.'%';
+        $name2 = '%'.$name.'%';
+        $req = $this->db->prepare("SELECT * FROM jobs  WHERE title like :title and (:careerlevel =-1 or careerlevel = :careerlevel) and (:city ='%-1%' or cities  LIKE :city) ");
+        $req->execute(array('title' => $name2,'city' => $city2,'careerlevel' => $career));
+
+        $res = $req->fetchAll();
+
+        $jobs = Job::getModels($res);
+        return $jobs;
+    }
+    
+    public function getCitySelect($selected = null)
+    {
+        $cr = new cityRepository();
+        $arrCity = $cr->getAllCities();
+        $selVal = explode(',', $selected);
+        //var_dump($selVal);
+        //var_dump($arrCity);
+        $val = '<option value="-1"></option>';
+        foreach ($arrCity as $value) {
+            if($selected !=null && in_array($value['id'],$selVal) )
+             $val.='<option selected value="'.$value['id'].'">'.$value['name'].'</option>';
+            else
+                $val.='<option value="'.$value['id'].'">'.$value['name'].'</option>';
+        }
+        return $val;        
+    }
 }

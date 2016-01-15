@@ -19,20 +19,11 @@
                             <?php echo $citySelect; ?>
                         </select>
                     </div>
-                    <div class="col-xs-2">
-                        <p><h5>Domain:</h5></p>
-                        <select  class="form-control"  name="domain">
-                            <option>Domain</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-2">
+
+                    <div class="col-xs-3">
                         <p><h5>Career:</h5></p>
                         <select  class="form-control" name="career">
-                            <option>Career</option>
+                            <option value="-1"></option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -40,14 +31,15 @@
                             <option>5</option>
                         </select>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
                         <p><h5>&nbsp;</h5></p>
                         <button type="submit" name="Cauta" value="cauta" class="btn btn-default form-control">Cauta</button>
                     </div>
 
                 </div>
+                </form>
         </div>
-        </form>
+        
         </br>
 
         <table class="table table-bordered">

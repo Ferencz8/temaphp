@@ -7,43 +7,37 @@
     <div>
         <div>
             <p><h4>Filters</h4></p>
-            <div class="row">
-                <div class="col-xs-3">
-                    <p><h5>Job:</h5></p>
-                    <input type="text" class="form-control" placeholder="Job">
-                </div>
-                <div class="col-xs-3">
-                    <p><h5>City:</h5></p>
-                    <select  class="form-control" name="cities">
-                        <option>City</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-                <div class="col-xs-3">
-                    <p><h5>Domain:</h5></p>
-                    <select  class="form-control" name="cities">
-                        <option>Domain</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-                <div class="col-xs-3">
-                    <p><h5>Career:</h5></p>
-                    <select  class="form-control" name="cities">
-                        <option>Career</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
+            <form method="post">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <p><h5>Job:</h5></p>
+                        <input type="text" class="form-control" placeholder="Job" name="job">
+                    </div>
+                    <div class="col-xs-3">
+                        <p><h5>City:</h5></p>
+                        <select  class="form-control" name="city">
+                            <?php echo $citySelect; ?>
+                        </select>
+                    </div>
 
-            </div>
+                    <div class="col-xs-3">
+                        <p><h5>Career:</h5></p>
+                        <select  class="form-control" name="career">
+                            <option value="-1"></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
+                        <p><h5>&nbsp;</h5></p>
+                        <button type="submit" name="Cauta" value="cauta" class="btn btn-default form-control">Cauta</button>
+                    </div>
+
+                </div>
+                </form>
         </div>
         </br>
         <table class="table table-bordered">

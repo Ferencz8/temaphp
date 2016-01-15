@@ -15,7 +15,7 @@ class CompanieController extends controller {
     }
 
     public function create() {
-        $citySelect = $this->getCitySelect();
+        $citySelect =  $this->jobRepository->getCitySelect();
         if (isset($_POST['createcompany'])) {
             $_SESSION['company'] = new Company(null, null);
             $validForm = $this->validateFirstCreateForm($_SESSION['company']);
@@ -148,8 +148,13 @@ class CompanieController extends controller {
     public function home() {
         $headerLinks = $this->companieHeader();
         $headerLinks[0][2] = 'active';
+        if (isset($_POST["Cauta"]))
+        {
+            $jobList = $this -> jobRepository ->searchJob($_POST['job'],$_POST['city'],$_POST['career']);
+        }
+        else
         $jobList = $this -> jobRepository -> getCompanyJobsForUser($_SESSION['loged']);
-        $citySelect = $this ->getCitySelect();
+        $citySelect =  $this->jobRepository->getCitySelect();
 //        $jobList = array(
 //            new Job("",new Company("", "Software"), "TestTitle", "", "", "",null,null,null,null ),
 //            new Job("", new Company("", "Software"), "Title 2", "", "", "",null,null,null,null)
@@ -162,7 +167,7 @@ class CompanieController extends controller {
         $headerLinks[1][2] = 'active';
 
         $company = $this->companyRepository->getCompanyByUserId($_SESSION['loged']);
-        $citySelect = $this->getCitySelect();
+        $citySelect =  $this->jobRepository->getCitySelect();
         if (isset($_POST['edit'])) {
            //var_dump($_POST);
             $validForm = $this->validateFirstCreateForm($company);
@@ -219,7 +224,7 @@ class CompanieController extends controller {
     public function editJob($job) {
         $headerLinks = $this->companieHeader();
         $headerLinks[2][2] = 'active';
-        $citySelect = $this ->getCitySelect($job ->getCities());
+        $citySelect =  $this->jobRepository->getCitySelect($job ->getCities());
         if (isset($_POST['jobedit'])) {
             $job -> setTitle($_POST['title']);
             $job -> setDescription($_POST['description']);
@@ -228,7 +233,7 @@ class CompanieController extends controller {
             $job -> setEndDate($_POST['date2']);
             $job -> setCities(implode(',',$_POST['cities']));
             $job -> setCareerlevel($_POST['level']);
-            $citySelect = $this ->getCitySelect($job ->getCities());
+            $citySelect = $this->jobRepository->getCitySelect($job ->getCities());
 
             $validForm = true;//$this->validateFirstCreateForm($job); TODO:: refacut validare,  asta nu e corecta pt un Job
             if ($validForm) {
@@ -257,21 +262,6 @@ class CompanieController extends controller {
         );
     }
     
-    public function getCitySelect($selected = null)
-    {
-        $cr = new cityRepository();
-        $arrCity = $cr->getAllCities();
-        $selVal = explode(',', $selected);
-        //var_dump($selVal);
-        //var_dump($arrCity);
-        $val = '<option value="-1"></option>';
-        foreach ($arrCity as $value) {
-            if($selected !=null && in_array($value['id'],$selVal) )
-             $val.='<option selected value="'.$value['id'].'">'.$value['name'].'</option>';
-            else
-                $val.='<option value="'.$value['id'].'">'.$value['name'].'</option>';
-        }
-        return $val;        
-    }
+    
 
 }
