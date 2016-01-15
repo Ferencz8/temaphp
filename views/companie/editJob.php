@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Positions Available</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" name="pos"  placeholder="Positions Available" value="<?php echo $job->availablePositions;?>">
+                    <input type="number" class="form-control" name="pos"  placeholder="Positions Available" value="<?php echo $job->availablepositions;?>">
                 </div>
             </div>
             <div class="form-group">
@@ -41,12 +41,8 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Cities</label>
                 <div class="col-sm-10">
-                    <select multiple class="form-control" name="cities">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select multiple class="form-control" name="cities[]">
+                        <?php echo $citySelect;?>
                     </select>
                 </div>
             </div>
@@ -71,6 +67,5 @@
             </div>
         </form>
     </div><!--/.row-->
-        <?php errorHandler::printErrorsOnStack(); ?>
-    
+        <?php errorHandler::printErrorsOnStack(); ?>    
 </div>

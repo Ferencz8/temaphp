@@ -15,6 +15,7 @@ class CompanieController extends controller {
     }
 
     public function create() {
+        $citySelect = $this->getCitySelect();
         if (isset($_POST['createcompany'])) {
             $_SESSION['company'] = new Company(null, null);
             $validForm = $this->validateFirstCreateForm($_SESSION['company']);
@@ -148,6 +149,7 @@ class CompanieController extends controller {
         $headerLinks = $this->companieHeader();
         $headerLinks[0][2] = 'active';
         $jobList = $this -> jobRepository -> getCompanyJobsForUser($_SESSION['loged']);
+        $citySelect = $this ->getCitySelect();
 //        $jobList = array(
 //            new Job("",new Company("", "Software"), "TestTitle", "", "", "",null,null,null,null ),
 //            new Job("", new Company("", "Software"), "Title 2", "", "", "",null,null,null,null)
@@ -160,8 +162,9 @@ class CompanieController extends controller {
         $headerLinks[1][2] = 'active';
 
         $company = $this->companyRepository->getCompanyByUserId($_SESSION['loged']);
-
+        $citySelect = $this->getCitySelect();
         if (isset($_POST['edit'])) {
+           //var_dump($_POST);
             $validForm = $this->validateFirstCreateForm($company);
             if ($validForm) {
                 $createTitle = 'Create Company Account 2/2';
@@ -184,13 +187,13 @@ class CompanieController extends controller {
         $action = $this->params[0];
         switch ($action) {
             case 'post':
-                $job = new Job(time(),new Company(null, null), null, null, null, null, null, null, null, null);
+                $job = new Job(null,$this->companyRepository-> getCompanyByUserId($_SESSION['loged']), null, null, null, null, null, null, null, null);
                 $this->editJob($job);
                 break;
             case 'edit':
                 //find job by id
                 //check $this->params[1];
-                $job = new Job(time(),new Company(null, null), 'Test job deja existent', null, null, null, null, null, null);
+                $job = $this -> jobRepository->get($this->params[1]);
                 $this->editJob($job);
                 break;
             case 'delete':
@@ -216,23 +219,28 @@ class CompanieController extends controller {
     public function editJob($job) {
         $headerLinks = $this->companieHeader();
         $headerLinks[2][2] = 'active';
-
+        $citySelect = $this ->getCitySelect($job ->getCities());
         if (isset($_POST['jobedit'])) {
             $job -> setTitle($_POST['title']);
             $job -> setDescription($_POST['description']);
             $job -> setAvailablepositions($_POST['pos']);
             $job -> setStartDate($_POST['date1']);
             $job -> setEndDate($_POST['date2']);
-            $job -> setCities($_POST['cities']);
+            $job -> setCities(implode(',',$_POST['cities']));
             $job -> setCareerlevel($_POST['level']);
+            $citySelect = $this ->getCitySelect($job ->getCities());
 
             $validForm = true;//$this->validateFirstCreateForm($job); TODO:: refacut validare,  asta nu e corecta pt un Job
             if ($validForm) {
                 $company = $this->companyRepository-> getCompanyByUserId($_SESSION['loged']);
                 $job -> company= $company;
+                if($job->getId() !=null)
+                 $this->jobRepository -> update($job);   
+                    else                        
                 $this->jobRepository -> create($job);
                 header("Location: /");
             } else {
+                
                 require_once('views/companie/editJob.php');
             }
         } else {
@@ -247,6 +255,23 @@ class CompanieController extends controller {
             array('/companie/job/post', '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Post Job', ''),
             array('/logout', 'Logout', 'navbar-right')
         );
+    }
+    
+    public function getCitySelect($selected = null)
+    {
+        $cr = new cityRepository();
+        $arrCity = $cr->getAllCities();
+        $selVal = explode(',', $selected);
+        //var_dump($selVal);
+        //var_dump($arrCity);
+        $val = '<option value="-1"></option>';
+        foreach ($arrCity as $value) {
+            if($selected !=null && in_array($value['id'],$selVal) )
+             $val.='<option selected value="'.$value['id'].'">'.$value['name'].'</option>';
+            else
+                $val.='<option value="'.$value['id'].'">'.$value['name'].'</option>';
+        }
+        return $val;        
     }
 
 }

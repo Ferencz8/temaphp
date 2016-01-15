@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 require_once 'models/BaseModel.php';
 require_once 'models/Candidate.php';
 require_once 'models/Company.php';

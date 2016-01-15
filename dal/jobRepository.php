@@ -20,7 +20,29 @@ class JobRepository{
         try {
 
             $null = null;
-            $req = $this->db->prepare('INSERT INTO jobs VALUES(:id,:companyId, :title, :availablepositions, :startdate, :enddate, :description, :cities, :careerlevel)');
+            $req = $this->db->prepare('INSERT INTO jobs (companyId, title, availablepositions, startdate, enddate, description, cities, careerlevel) VALUES(:companyId, :title, :availablepositions, :startdate, :enddate, :description, :cities, :careerlevel)');
+            //$req->bindParam(':id', $job->getId());
+            $req->bindParam(':companyId', !is_null($job->getCompany()) ? $job->getCompany()->id : $null );
+            $req->bindParam(':title', $job->getTitle());
+            $req->bindParam(':availablepositions', $job->getAvailablepositions());
+            $req->bindParam(':startdate', $job->getStartDate());
+            $req->bindParam(':enddate', $job->getEndDate());
+            $req->bindParam(':description', $job->getDescription());
+            $req->bindParam(':cities', $job->getCities());
+            $req->bindParam(':careerlevel', $job->getCareerlevel());
+
+            $req->execute();
+        } catch (PDOException $e) {
+
+        }
+    }
+    
+    public function update($job)
+    {
+        try {
+
+            $null = null;
+            $req = $this->db->prepare('update jobs set companyId=:companyId, title=:title, availablepositions=:availablepositions, startdate=:startdate, enddate=:enddate, description=:description, cities=:cities, careerlevel=:careerlevel where id =:id');
             $req->bindParam(':id', $job->getId());
             $req->bindParam(':companyId', !is_null($job->getCompany()) ? $job->getCompany()->id : $null );
             $req->bindParam(':title', $job->getTitle());
@@ -55,8 +77,8 @@ class JobRepository{
         $id = intval($userId);
 
         $req = $this->db->prepare(' select jobs.* from jobs
-                                    inner join Companies on Companies.id = jobs.companyid
-                                    where Companies.userId = :id');
+                                    inner join companies on companies.id = jobs.companyid
+                                    where companies.userId = :id');
         $req->execute(array('id' => $id));
         $res = $req->fetchAll();
 

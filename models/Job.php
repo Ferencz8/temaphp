@@ -34,7 +34,8 @@ class Job extends BaseModel{
 
     public static function getModel($res){
         $company = new Company($res['companyId'], null);
-        return new Job($res['id'],$company, $res['title'], $res['availablepositions'], $res['startDate'], $res['endDate'], $res['description'], $res['cities'], $res['careerlevel']);
+        //var_dump($res);
+        return new Job($res['id'],$company, $res['title'], $res['availablepositions'], $res['startdate'], $res['enddate'], $res['description'], $res['cities'], $res['careerlevel']);
     }
 
 
