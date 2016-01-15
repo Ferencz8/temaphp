@@ -36,4 +36,13 @@ class Candidate extends BaseModel{
         $cv = new CV($res['cvId'], null);
         return new Candidate($res['id'], $res['firstname'], $res['lastname'], $res['birthdate'], $res['address'], $res['phone'], $res['email'], null,$user, $cv);
     }
+
+    public static function getModels($res){
+        $result = array();
+        foreach($res as $element){
+            $model = Candidate::getModel($element);
+            array_push($result, $model);
+        }
+        return $result;
+    }
 }

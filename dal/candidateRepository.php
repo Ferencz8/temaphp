@@ -124,4 +124,22 @@ class CandidateRepository
         }
         return null;
     }
+
+
+
+    public function getCandidatesForJob($jobId){
+
+
+        $req = $this->db->prepare('SELECT
+candidates.*
+FROM candidates
+INNER JOIN appliedjobs ON appliedjobs.candidateId = candidates.Id
+WHERE appliedjobs.jobId = :id');
+        $req->execute(array('id' => $jobId));
+        $res = $req->fetchALL();
+
+        $candidates = Candidate::getModels($res);
+
+        return $candidates;
+    }
 }

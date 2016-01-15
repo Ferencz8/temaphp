@@ -6,10 +6,12 @@ class CompanieController extends controller {
 
     protected $companyRepository;
     protected $jobRepository;
+    protected $candidateRepository;
     function __construct($params) {
         parent::__construct($params);
-        $this->companyRepository = new CompanyRepository();
+        $this -> companyRepository = new CompanyRepository();
         $this -> jobRepository = new JobRepository();
+        $this -> candidateRepository = new CandidateRepository();
     }
 
     public function create() {
@@ -205,8 +207,8 @@ class CompanieController extends controller {
     }
     
     public function viewJob($jobId) {
-        $job = new Job(time(),null, 'Test job deja existent', null, null, null, null, null, null);
-        $candidateList = $_SESSION['candidates'];
+        $job = $this -> jobRepository -> get($jobId);
+        $candidateList = $this -> candidateRepository -> getCandidatesForJob($jobId);
         require_once('views/companie/viewJob.php');
     }
 

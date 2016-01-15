@@ -39,4 +39,13 @@ class Company extends BaseModel{
         $user = new User($res['userId'],null,null,null);
         return new Company($res['id'], $res['name'], $res['description'], $res['address'], $res['phone'], $res['email'], $res['logo'],$res['cities'],$res['cities'],null,$user, null);
     }
+
+    public static function getModels($res){
+        $result = array();
+        foreach($res as $element){
+            $model = Company::getModel($element);
+            array_push($result, $model);
+        }
+        return $result;
+    }
 }
