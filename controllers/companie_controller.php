@@ -167,6 +167,7 @@ class CompanieController extends controller {
                 $createTitle = 'Create Company Account 2/2';
                 $createBackLink = '/companie/create';
 
+                $this -> companyRepository -> update($company);
                 header("Location: /");
             } else {
                 require_once('views/companie/edit.php');

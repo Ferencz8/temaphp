@@ -49,4 +49,22 @@ class CompanyRepository {
         return $companie;
     }
 
+    public function update($company){
+        try {
+            $null = null;
+            $req = $this->db->prepare('UPDATE companies SET name =:name,description =:description,address =:address,phone =:phone,email =:email, logo=:logo, cities=:cities WHERE id =:id');
+            $req->bindParam(':id', $company->id);
+            $req->bindParam(':name', $company->name);
+            $req->bindParam(':description', $company->description);
+            $req->bindParam(':address', $company->address);
+            $req->bindParam(':phone', $company->phone);
+            $req->bindParam(':email', $company->email);
+            $req->bindParam(':logo', $company->logo);
+            $req->bindParam(':cities', $company->cities);
+
+            $req->execute();
+        } catch (PDOException $e) {
+
+        }
+    }
 }
